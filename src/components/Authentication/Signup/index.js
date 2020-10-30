@@ -12,7 +12,6 @@ export default class Signup extends Component {
 
     handleInputChange = event => {
         const { name, value } = event.target;
-        console.log(name, value)
         this.setState({ [name]: value });
     }
 
@@ -25,7 +24,6 @@ export default class Signup extends Component {
             .then(responseFromServer => {
                 const { user } = responseFromServer.data;
                 // lift user up to App.js
-                console.log({user})
                 this.props.onUserChange(user);
                 this.props.history.push('/'); // redirect back to the home page
             })
