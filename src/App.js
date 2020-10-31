@@ -9,14 +9,26 @@ import ProtectedRoute from './components/ProtectedRoute';
 import Profile from './components/Profile';
 import Login from './components/Authentication/Login';
 
+import TEAM_SERVICE from './services/TeamService';
+
 
 class App extends Component {
   state ={
     currentUser: null,
+    currentTeam: null,
+    currentProject: null,
   }
 
   updateUser = (user) => {
     this.setState({ currentUser: user});
+  }
+
+  componentDidMount = () => {
+    TEAM_SERVICE
+      .getAllTeams()
+      .then()
+      .catch(err => console.log({ err }));
+
   }
 
   render() {
