@@ -9,6 +9,7 @@ import ProtectedRoute from './components/ProtectedRoute';
 import Profile from './components/Profile';
 import Login from './components/Authentication/Login';
 
+import AUTH_SERVICE from './services/AuthService';
 import TEAM_SERVICE from './services/TeamService';
 
 
@@ -24,6 +25,12 @@ class App extends Component {
   }
 
   componentDidMount = () => {
+    // Promise
+    //   .all([TEAM_SERVICE.getUserTeams(), AUTH_SERVICE.getAuthenticatedUser()])
+    //   .then()
+    //   .catch(err => console.log({ err }));
+
+
     TEAM_SERVICE
       .getAllTeams()
       .then()
