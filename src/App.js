@@ -24,19 +24,21 @@ class App extends Component {
     this.setState({ currentUser: user});
   }
 
-  componentDidMount = () => {
+  // getCurrentUser = () => {
+  //   return AUTH_SERVICE.getAuthenticatedUser();
+  // }
+
+  // componentDidMount = () => {
     // Promise
-    //   .all([TEAM_SERVICE.getUserTeams(), AUTH_SERVICE.getAuthenticatedUser()])
-    //   .then()
+    //   .all([AUTH_SERVICE.getAuthenticatedUser(), TEAM_SERVICE.getUserTeams()])
+    //   .then(responseFromServer => {
+    //     const { user } = responseFromServer[0].data;
+
+    //     this.setState({ currentUser: user });
+    //   })
     //   .catch(err => console.log({ err }));
 
-
-    TEAM_SERVICE
-      .getAllTeams()
-      .then()
-      .catch(err => console.log({ err }));
-
-  }
+  // }
 
   render() {
     return (

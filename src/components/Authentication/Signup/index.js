@@ -3,7 +3,8 @@ import AUTH_SERVICE from '../../../services/AuthService';
 
 export default class Signup extends Component {
     state = {
-        username: '',
+        firstName: '',
+        lastName: '',
         email: '',
         password: '',
         profileImg: null,
@@ -17,15 +18,15 @@ export default class Signup extends Component {
 
     handleFormSubmission = event => {
         event.preventDefault();
-        const { username, email, password } = this.state;
+        const { firstName, lastName, email, password } = this.state;
 
         AUTH_SERVICE
-            .signup({ username, email, password })
+            .signup({ firstName, lastName, email, password })
             .then(responseFromServer => {
                 const { user } = responseFromServer.data;
                 // lift user up to App.js
                 this.props.onUserChange(user);
-                this.props.history.push('/'); // redirect back to the home page
+                this.props.history.push('/profile'); // redirect back to the home page
             })
             .catch(err => {
                 if (err.response && err.response.data) {
@@ -39,11 +40,21 @@ export default class Signup extends Component {
             <section>
                 <form onSubmit={this.handleFormSubmission}>
                     <label>
-                    Username:
+                    First name:
                     <input
-                        name='username'
+                        name='firstName'
                         type='text'
                         placeholder='John'
+                        value={this.state.username}
+                        onChange={this.handleInputChange}
+                    />
+                    </label>
+                    <label>
+                    Last name:
+                    <input
+                        name='lastName'
+                        type='text'
+                        placeholder='Wick'
                         value={this.state.username}
                         onChange={this.handleInputChange}
                     />
