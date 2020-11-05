@@ -15,7 +15,7 @@ const TEAM_SERVICE = {
     return service.get('/api/teams');
   },
   getUserTeams() {
-    return service.get('/api/user-team');
+    return service.get('/api/user-teams');
   },
   getOneTeam(teamData) {
     return service.get(`/api/teams/${teamData}`);

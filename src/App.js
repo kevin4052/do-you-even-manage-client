@@ -24,21 +24,20 @@ class App extends Component {
     this.setState({ currentUser: user});
   }
 
-  // getCurrentUser = () => {
-  //   return AUTH_SERVICE.getAuthenticatedUser();
-  // }
+  getCurrentUser = () => {
+    return AUTH_SERVICE.getAuthenticatedUser();
+  }
 
-  // componentDidMount = () => {
-    // Promise
-    //   .all([AUTH_SERVICE.getAuthenticatedUser(), TEAM_SERVICE.getUserTeams()])
-    //   .then(responseFromServer => {
-    //     const { user } = responseFromServer[0].data;
+  componentDidMount = () => {
+    Promise
+      .all([AUTH_SERVICE.getAuthenticatedUser()])
+      .then(responseFromServer => {
+        const { user } = responseFromServer[0].data;
+        this.setState({ currentUser: user });
+      })
+      .catch(err => console.log({ err }));
 
-    //     this.setState({ currentUser: user });
-    //   })
-    //   .catch(err => console.log({ err }));
-
-  // }
+  }
 
   render() {
     return (
