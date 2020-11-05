@@ -11,17 +11,17 @@ const TASK_SERVICE = {
   createTask(taskData) {
     return service.post('/api/tasks', taskData);
   },
-  getAllTasks(taskData) {
-    return service.get('/api/tasks', taskData);
+  getAllTasks() {
+    return service.get('/api/tasks');
   },
   getOneTask(taskId) {
     return service.get(`/api/tasks/${taskId}`);
   },
   deleteTask(taskId) {
-    return service.post(`/api/tasks/${taskId}/delete`, {});
+    return service.post(`/api/tasks/${taskId}/delete`);
   },
-  updateTask(taskId) {
-    return service.post(`/api/tasks/${taskId}/update`, {});
+  updateTask(taskId, taskData) {
+    return service.post(`/api/tasks/${taskId}/update`, {taskData});
   }
 };
 

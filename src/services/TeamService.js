@@ -9,22 +9,25 @@ const service = axios.create({
 
 const TEAM_SERVICE = {
   createTeam(teamData) {
-    return service.post('/api/team', teamData);
+    return service.post('/api/teams', teamData);
   },
-  getAllTeams(teamData) {
-    return service.get('/api/team', teamData);
+  getAllTeams() {
+    return service.get('/api/teams');
   },
-  getUserTeams(userData) {
-    return service.get('/api/team', userData);
+  getUserTeams() {
+    return service.get('/api/user-team');
   },
   getOneTeam(teamData) {
-    return service.get(`/api/team/${teamData}`);
+    return service.get(`/api/teams/${teamData}`);
   },
   deleteTeam(teamData) {
-    return service.post(`/api/team/${teamData}/delete`, {});
+    return service.post(`/api/teams/${teamData}/delete`, {});
   },
   updateTeam(teamData) {
-    return service.post(`/api/team/${teamData}/update`, {});
+    return service.post(`/api/teams/${teamData}/update`, {});
+  },
+  removeTeamMember(teamData) {
+    return service.post(`/api/teams/${teamData}/remove-member`, {});
   }
 };
 
