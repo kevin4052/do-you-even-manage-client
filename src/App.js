@@ -10,7 +10,7 @@ import Profile from './components/Profile';
 import Login from './components/Authentication/Login';
 
 import AUTH_SERVICE from './services/AuthService';
-import TEAM_SERVICE from './services/TeamService';
+// import TEAM_SERVICE from './services/TeamService';
 
 
 class App extends Component {
@@ -24,26 +24,33 @@ class App extends Component {
     this.setState({ currentUser: user});
   }
 
-  getCurrentUser = () => {
-    return AUTH_SERVICE.getAuthenticatedUser();
+  updateCurrentTeam = (team) => {
+    console.log({team})
+    this.setState({ currentTeam: team });
   }
 
-  componentDidMount = () => {
-    Promise
-      .all([AUTH_SERVICE.getAuthenticatedUser()])
+  updateCurrentProject = (project) => {
+    console.log({project})
+    this.setState({ currentProject: project });
+  }
+
+  componentDidMount = async () => {
+    await AUTH_SERVICE
+      .getAuthenticatedUser()
       .then(responseFromServer => {
-        const { user } = responseFromServer[0].data;
+        const { user } = responseFromServer.data;
         this.setState({ currentUser: user });
       })
       .catch(err => console.log({ err }));
-
   }
 
   render() {
     return (
       <div className="App">
         <BrowserRouter>
+
           <Navbar currentUser={this.state.currentUser} onUserChange={this.updateUser} />
+
           <Switch>
             <Route 
               exact path='/' 
@@ -61,7 +68,7 @@ class App extends Component {
               path='/profile'
               authorized={this.state.currentUser}
               redirect={'/login'}
-              render={props => <Profile {...props} currentUser={this.state.currentUser} />}
+              render={props => <Profile {...props} currentUser={this.state.currentUser} updateCurrentTeam={this.updateCurrentTeam}/>}
             />
           </Switch>
 

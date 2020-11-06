@@ -1,22 +1,23 @@
 import React, { Component } from 'react';
+import AUTH_SERVICE from '../../services/AuthService';
 import TASK_SERVICE from '../../services/TaskService';
 import TEAM_SERVICE from '../../services/TeamService';
+import TeamForm from '../TeamForm';
+import ProjectForm from '../ProjectForm';
 
 export default class Profile extends Component {
     state = {
-        tasks: [],
         teams: [],
+        projects: [],
+        tasks: [],
         taskForm: {
             title: '',
-        },        
-        teamForm: {
-            name: '',
-            owner: '',
-            members: []
-        }
+        },
     }
 
     componentDidMount = () => {
+        AUTH_SERVICE
+            .getAuthenticatedUser()
         TASK_SERVICE
             .getAllTasks()
             .then(responseFromServer => {
@@ -44,14 +45,6 @@ export default class Profile extends Component {
         this.setState({ taskForm });
     }
 
-    handleTeamInputChange = event => {
-        const { name, value } = event.target;
-        const { teamForm } = this.state;
-        teamForm[name] = value;
-        console.log(teamForm);
-        this.setState({ teamForm });
-    }
-
     handleFormSubmit = event => {
         event.preventDefault();
         const { taskForm } = this.state;
@@ -64,27 +57,33 @@ export default class Profile extends Component {
                 this.setState((preState => ({
                     tasks: preState.tasks.concat(task),
                     title: ''
-                })))
+                })));
             })
             .catch(err => console.log({ err }));
     }
 
-    handleTeamFormSubmit = (event) => {
-        event.preventDefault();
-        const { teamForm } = this.state;
-        teamForm.members.push(this.props.currentUser._id)
+    newTeam = (team) => {
+        const { teams } = this.state;
+        this.setState({ teams: [...teams, team] });
+    }
 
-        TEAM_SERVICE
-            .createTeam(teamForm)
-            .then(teamFromServer => {
-                const { team } = teamFromServer.data;
-                console.log({ team });
-                this.setState((preState) => ({
-                    teams: preState.teams.concat(team)
-                }));
-            })
-            .catch(err => console.log({ err }));
+    newProject = (project) => {
+        const { projects } = this.state;
+        this.setState({ projects: [...projects, project] });
+    }
 
+    handleCurrentTeamChange = (event) => {
+        const { value } = event.target;
+        const { teams } = this.state;
+        const team = teams.filter(team => team._id === value)[0];
+        this.props.updateCurrentTeam(team)
+    }
+
+    handleCurrentProjectChange = (event) => {
+        const { value } = event.target;
+        const { projects } = this.state;
+        const team = projects.filter(team => team._id === value)[0];
+        this.props.updateCurrentProject(team)
     }
 
     render() {
@@ -92,63 +91,64 @@ export default class Profile extends Component {
             <div>
                 <h2>Profile page of {this.props.currentUser.firstName}</h2>
                 <div>
-                    <form onSubmit={this.handleTeamFormSubmit}>
-                        <label>
-                            Team name:
-                            <input 
-                                name='name' 
-                                type='text'
-                                placeholder='team name'
-                                value={this.state.teamForm.name}
-                                onChange={this.handleTeamInputChange}/>
-                        </label>
-                        <button> Create a Team </button>
-                    </form>
-                    {
-                        this.state.teams &&
-                        <div className='team-list'>
+                    <div className='team-section'>
+                        <TeamForm currentUser={this.props.currentUser} newTeam={this.newTeam}/>                        
+                        <div className='teams'>
                             <h4>Your Teams</h4>
-                            <div>
-                                {
+                            <div className='team-list'>
+                                {   // should only display teams related to the currently authenticated user
                                     this.state.teams.map(team => 
-                                        <label>{team.name}
-                                            <input key={team._id} type="checkbox" />
+                                        <label key={team._id}>
+                                            <input type="radio" name='teams' onChange={this.handleCurrentTeamChange} value={team._id} />
+                                            {team.name}
                                         </label>
                                     )
                                 }
                             </div>
                         </div>
-                        
-                    }
+                    </div>
 
-                </div>
-                <div className='task'>
-                    <form onSubmit={this.handleFormSubmit}>
-                        <label>
-                            Task Title
-                            <input 
-                                name='title' 
-                                type='text'
-                                placeholder='task title'
-                                value={this.state.taskForm.tile}
-                                onChange={this.handleTaskInputChange}/>
-                        </label>
-                        <button> add a new task </button>
-                    </form>
-                    {
-                        this.state.tasks &&
-                        <div className='task-list'>
+                    <div className='project-section'>
+                        <ProjectForm currentUser={this.props.currentUser} newProject={this.newProject}/>                        
+                        <div className='projects'>
+                            <h4>Your Teams</h4>
+                            <div className='project-list'>
+                                {   // should only display projects related to the currently selected team
+                                    this.state.projects.map(project => 
+                                        <label key={project._id}>
+                                            <input type="radio" name='projects' onChange={this.handleCurrentProjectChange} value={project._id} />
+                                            {project.name}
+                                        </label>
+                                    )
+                                }
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className='task-section'>
+                        <form onSubmit={this.handleFormSubmit}>
+                            <label>
+                                Task Title
+                                <input 
+                                    name='title' 
+                                    type='text'
+                                    placeholder='task title'
+                                    value={this.state.taskForm.tile}
+                                    onChange={this.handleTaskInputChange}/>
+                            </label>
+                            <button> add a new task </button>
+                        </form>
+                        <div className='tasks'>
                             <h4>Tasks</h4>
-                            <ul>
-                                {
+                            <ul className='task-list'>
+                                {   // should only display task related to the currently selected project
                                     this.state.tasks.map(task => 
                                     <li key={task._id}>{task.title}, complete: {task.isComplete ? 'yes' : 'no'}</li>
                                     )
                                 }
                             </ul>
                         </div>
-                        
-                    }
+                    </div>
                 </div>
             </div>
         )
