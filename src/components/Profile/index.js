@@ -24,62 +24,58 @@ export default class Profile extends Component {
             })
             .catch(err => console.log({ err }));
 
-        const userTeams = await TEAM_SERVICE
+        // get all user teams
+        await TEAM_SERVICE
             .getUserTeams()
             .then(responseFromServer => {
                 const { teams } = responseFromServer.data;
                 console.log({ teams });
+
                 this.setState((preState) => ({
                     teams: preState.teams.concat(teams)
                 }));
-                return teams
+                
+                const userTeamIDs = this.state.teams.map(team => team._id);
+                console.log({ userTeamIDs });
+
+                // get all team projects
+                userTeamIDs.forEach(async teamId => {     
+
+                    await PROJECT_SERVICE
+                        .getTeamProjects(teamId)
+                        .then(responseFromServer => {
+                            const { projects } = responseFromServer.data;
+                            console.log({ projects });
+        
+                            projects &&
+                            this.setState((preState) => ({
+                                projects: preState.projects.concat(projects)
+                            }));                            
+                        })
+                        .catch(err => console.log({ err }));
+
+                    const teamProjectIDs = this.state.projects?.map(project => project._id);
+                    console.log({ teamProjectIDs });
+            
+                    // get all project tasks
+                    teamProjectIDs.forEach(async projectId => {
+            
+                        await TASK_SERVICE
+                            .getProjectTasks(projectId)
+                            .then(responseFromServer => {
+                                const { tasks } = responseFromServer.data;
+                                console.log('profile component did mount tasks', { tasks });
+                                this.setState((preState) => ({
+                                    tasks: preState.tasks.concat(tasks) || []
+                                }));
+                            })
+                            .catch(err => console.log({ err }));
+                    })
+                });
             })
             .catch(err => console.log({ err }));
 
-        const userTeamIDs = userTeams?.map(team => team._id);
-        console.log({userTeamIDs})
-
-        const teamProjects = [];
-        
-        await userTeamIDs.forEach(async teamId => {
-            
-            await PROJECT_SERVICE
-                .getTeamProjects(teamId)
-                .then(responseFromServer => {
-                    const { projects } = responseFromServer.data;
-                    console.log({ projects });
-
-                    projects &&
-                    this.setState((preState) => ({
-                        projects: preState.projects.concat(projects)
-                    }));
-                    teamProjects.concat(projects);
-                })
-                .catch(err => console.log({ err }));
-        });
-
-        console.log({ teamProjects });
-        const teamProjectIDs = teamProjects?.map(project => project._id);
-        console.log({ teamProjectIDs });
-
-        // const projectTasks = [];
-
-        await teamProjectIDs.forEach(async projectId => {
-
-            await TASK_SERVICE
-                .getProjectTasks(projectId)
-                .then(responseFromServer => {
-                    const { tasks } = responseFromServer.data;
-                    console.log('profile component did mount tasks', { tasks });
-                    this.setState((preState) => ({
-                        tasks: preState.tasks.concat(tasks) || []
-                    }));
-                })
-                .catch(err => console.log({ err }));
-        })
-
-
-            console.log(this.state)
+        console.log(this.state)
     }
 
     newTeam = (team) => {
