@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import PROJECT_SERVICE from '../../services/ProjectService';
 
 
-export default class index extends Component {
+export default class ProjectForm extends Component {
     state = {
         name: '',
         description: '',
-        team: this.props.currentTeam._id
+        team: this.props.currentTeam?._id
     }
 
     handleInputChange = event => {
@@ -30,7 +30,6 @@ export default class index extends Component {
                 });
             })
             .catch(err => console.log({ err }));
-
     }
 
     render() {
@@ -38,7 +37,7 @@ export default class index extends Component {
             <div>
                 <form onSubmit={this.handleFormSubmit}>
                     <label>
-                        Project name:
+                        {/* Project name: */}
                         <input 
                             name='name' 
                             type='text'
@@ -47,7 +46,7 @@ export default class index extends Component {
                             onChange={this.handleInputChange}/>
                     </label>
                     <label>
-                        Project description:
+                        {/* Project description: */}
                         <input 
                             name='description' 
                             type='text'

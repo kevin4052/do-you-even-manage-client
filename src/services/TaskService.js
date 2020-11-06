@@ -14,6 +14,12 @@ const TASK_SERVICE = {
   getAllTasks() {
     return service.get('/api/tasks');
   },
+  getAllUserTasks() {
+    return service.get('/api/user-tasks');
+  },
+  getProjectTasks(projectId) {
+    return service.get(`/api/project-tasks/${projectId}`);
+  },
   getOneTask(taskId) {
     return service.get(`/api/tasks/${taskId}`);
   },

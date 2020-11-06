@@ -4,62 +4,82 @@ import TASK_SERVICE from '../../services/TaskService';
 import TEAM_SERVICE from '../../services/TeamService';
 import TeamForm from '../TeamForm';
 import ProjectForm from '../ProjectForm';
+import TaskForm from '../TaskForm';
+import PROJECT_SERVICE from '../../services/ProjectService';
 
 export default class Profile extends Component {
     state = {
         teams: [],
         projects: [],
         tasks: [],
-        taskForm: {
-            title: '',
-        },
     }
 
-    componentDidMount = () => {
-        AUTH_SERVICE
+    componentDidMount = async () => {
+        await AUTH_SERVICE
             .getAuthenticatedUser()
-        TASK_SERVICE
-            .getAllTasks()
-            .then(responseFromServer => {
-                const { tasks } = responseFromServer.data;
-                console.log({ tasks });
-                this.setState({ tasks });
+            .then(userFromServer => {
+                const { user } = userFromServer.data;
+                console.log({ user });
+                this.props.onUserChange(user)
             })
             .catch(err => console.log({ err }));
 
-        TEAM_SERVICE
+        const userTeams = await TEAM_SERVICE
             .getUserTeams()
             .then(responseFromServer => {
                 const { teams } = responseFromServer.data;
                 console.log({ teams });
-                this.setState({ teams });
+                this.setState((preState) => ({
+                    teams: preState.teams.concat(teams)
+                }));
+                return teams
             })
             .catch(err => console.log({ err }));
-    }
 
-    handleTaskInputChange = event => {
-        const { name, value } = event.target;
-        const { taskForm } = this.state;
-        taskForm[name] = value;
-        console.log(taskForm);
-        this.setState({ taskForm });
-    }
+        const userTeamIDs = userTeams?.map(team => team._id);
+        console.log({userTeamIDs})
 
-    handleFormSubmit = event => {
-        event.preventDefault();
-        const { taskForm } = this.state;
+        const teamProjects = [];
+        
+        await userTeamIDs.forEach(async teamId => {
+            
+            await PROJECT_SERVICE
+                .getTeamProjects(teamId)
+                .then(responseFromServer => {
+                    const { projects } = responseFromServer.data;
+                    console.log({ projects });
 
-        TASK_SERVICE
-            .createTask(taskForm)
-            .then(responseFromServer => {
-                const { task } = responseFromServer.data;
-                console.log({ task });
-                this.setState((preState => ({
-                    tasks: preState.tasks.concat(task),
-                    title: ''
-                })));
-            })
-            .catch(err => console.log({ err }));
+                    projects &&
+                    this.setState((preState) => ({
+                        projects: preState.projects.concat(projects)
+                    }));
+                    teamProjects.concat(projects);
+                })
+                .catch(err => console.log({ err }));
+        });
+
+        console.log({ teamProjects });
+        const teamProjectIDs = teamProjects?.map(project => project._id);
+        console.log({ teamProjectIDs });
+
+        // const projectTasks = [];
+
+        await teamProjectIDs.forEach(async projectId => {
+
+            await TASK_SERVICE
+                .getProjectTasks(projectId)
+                .then(responseFromServer => {
+                    const { tasks } = responseFromServer.data;
+                    console.log('profile component did mount tasks', { tasks });
+                    this.setState((preState) => ({
+                        tasks: preState.tasks.concat(tasks) || []
+                    }));
+                })
+                .catch(err => console.log({ err }));
+        })
+
+
+            console.log(this.state)
     }
 
     newTeam = (team) => {
@@ -72,6 +92,11 @@ export default class Profile extends Component {
         this.setState({ projects: [...projects, project] });
     }
 
+    newTask = (task) => {
+        const { tasks } = this.state;
+        this.setState({ tasks: [...tasks, task] });
+    }
+
     handleCurrentTeamChange = (event) => {
         const { value } = event.target;
         const { teams } = this.state;
@@ -82,22 +107,25 @@ export default class Profile extends Component {
     handleCurrentProjectChange = (event) => {
         const { value } = event.target;
         const { projects } = this.state;
-        const team = projects.filter(team => team._id === value)[0];
-        this.props.updateCurrentProject(team)
+        const project = projects.filter(project => project._id === value)[0];
+        this.props.updateCurrentProject(project);
     }
 
     render() {
         return (
             <div>
                 <h2>Profile page of {this.props.currentUser.firstName}</h2>
-                <div>
+                <div style={{display: "flex"}}>
+
                     <div className='team-section'>
-                        <TeamForm currentUser={this.props.currentUser} newTeam={this.newTeam}/>                        
+                        <TeamForm 
+                            currentUser={this.props.currentUser} 
+                            newTeam={this.newTeam}/>                        
                         <div className='teams'>
                             <h4>Your Teams</h4>
                             <div className='team-list'>
                                 {   // should only display teams related to the currently authenticated user
-                                    this.state.teams.map(team => 
+                                    this.state.teams?.map(team => 
                                         <label key={team._id}>
                                             <input type="radio" name='teams' onChange={this.handleCurrentTeamChange} value={team._id} />
                                             {team.name}
@@ -109,12 +137,18 @@ export default class Profile extends Component {
                     </div>
 
                     <div className='project-section'>
-                        <ProjectForm currentUser={this.props.currentUser} newProject={this.newProject}/>                        
+                        {
+                            this.props.currentTeam &&
+                            <ProjectForm 
+                                currentUser={this.props.currentUser} 
+                                currentTeam={this.props.currentTeam} 
+                                newProject={this.newProject}/>
+                        }
                         <div className='projects'>
-                            <h4>Your Teams</h4>
+                            <h4>Your Projects</h4>
                             <div className='project-list'>
                                 {   // should only display projects related to the currently selected team
-                                    this.state.projects.map(project => 
+                                    this.state.projects?.map(project => 
                                         <label key={project._id}>
                                             <input type="radio" name='projects' onChange={this.handleCurrentProjectChange} value={project._id} />
                                             {project.name}
@@ -126,24 +160,18 @@ export default class Profile extends Component {
                     </div>
 
                     <div className='task-section'>
-                        <form onSubmit={this.handleFormSubmit}>
-                            <label>
-                                Task Title
-                                <input 
-                                    name='title' 
-                                    type='text'
-                                    placeholder='task title'
-                                    value={this.state.taskForm.tile}
-                                    onChange={this.handleTaskInputChange}/>
-                            </label>
-                            <button> add a new task </button>
-                        </form>
+                        {
+                            this.props.currentProject &&
+                            <TaskForm 
+                                currentProject={this.props.currentProject}
+                                newTask={this.newTask}/>
+                        }
                         <div className='tasks'>
                             <h4>Tasks</h4>
                             <ul className='task-list'>
                                 {   // should only display task related to the currently selected project
-                                    this.state.tasks.map(task => 
-                                    <li key={task._id}>{task.title}, complete: {task.isComplete ? 'yes' : 'no'}</li>
+                                    this.state.tasks?.map(task => 
+                                    <li key={task._id}>{task.title}</li>
                                     )
                                 }
                             </ul>

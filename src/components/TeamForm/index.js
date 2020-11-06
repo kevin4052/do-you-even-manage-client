@@ -39,7 +39,7 @@ export default class TeamForm extends Component {
             <div>
                 <form onSubmit={this.handleFormSubmit}>
                     <label>
-                        Team name:
+                        {/* Team name: */}
                         <input 
                             name='name' 
                             type='text'

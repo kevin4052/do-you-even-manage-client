@@ -14,6 +14,9 @@ const PROJECT_SERVICE = {
   getAllProjects() {
     return service.get('/api/projects');
   },
+  getTeamProjects(teamId) {
+    return service.get(`/api/team-projects/${teamId}`);
+  },
   getOneProject(projectId) {
     return service.get(`/api/projects/${projectId}`);
   },
