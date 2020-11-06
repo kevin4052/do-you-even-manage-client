@@ -53,29 +53,9 @@ export default class Profile extends Component {
                             }));                            
                         })
                         .catch(err => console.log({ err }));
-
-                    const teamProjectIDs = this.state.projects?.map(project => project._id);
-                    console.log({ teamProjectIDs });
-            
-                    // get all project tasks
-                    teamProjectIDs.forEach(async projectId => {
-            
-                        await TASK_SERVICE
-                            .getProjectTasks(projectId)
-                            .then(responseFromServer => {
-                                const { tasks } = responseFromServer.data;
-                                console.log('profile component did mount tasks', { tasks });
-                                this.setState((preState) => ({
-                                    tasks: preState.tasks.concat(tasks) || []
-                                }));
-                            })
-                            .catch(err => console.log({ err }));
-                    })
                 });
             })
             .catch(err => console.log({ err }));
-
-        console.log(this.state)
     }
 
     newTeam = (team) => {
@@ -105,6 +85,14 @@ export default class Profile extends Component {
         const { projects } = this.state;
         const project = projects.filter(project => project._id === value)[0];
         this.props.updateCurrentProject(project);
+        
+        TASK_SERVICE
+            .getProjectTasks(project._id)
+            .then(responseFromServer => {
+                const { tasks } = responseFromServer.data;
+                this.setState({ tasks });
+            })
+            .catch(err => console.log({ err }));
     }
 
     render() {
