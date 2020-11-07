@@ -13,7 +13,20 @@
   }
 }
 
+.main-panel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: calc(100% - 260px);
+}
+
 .flex-row {
   display: flex;
   flex-direction: row;
+}
+
+.float-right {
+  float: right;
+  width: 100% - 260px;
 }

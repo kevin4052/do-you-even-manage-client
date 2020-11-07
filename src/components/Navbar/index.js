@@ -15,7 +15,13 @@ const Navbar = props => {
     return (
         <nav>
             <div>
-                <Link to='/'> Home </Link>
+                {
+                    props.currentUser
+                    ? <Link to='/home'> APP NAME </Link>
+                    : <Link to='/'> APP NAME </Link>
+                }
+                
+                
             </div>
             {
                 props.currentUser

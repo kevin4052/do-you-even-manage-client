@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
-import Navbar from './components/Navbar';
+// import Navbar from './components/Navbar';
 import Home from './components/Home';
 import Signup from './components/Authentication/Signup';
 import ProtectedRoute from './components/ProtectedRoute';
@@ -10,6 +10,10 @@ import Profile from './components/Profile';
 import Login from './components/Authentication/Login';
 
 import AUTH_SERVICE from './services/AuthService';
+import Landing from './components/LandingPage';
+import SideNav from './components/SideNav';
+import Navbar from './components/Navbar';
+// import TEAM_SERVICE from './services/TeamService';
 // import TASK_SERVICE from './services/TaskService';
 // import TEAM_SERVICE from './services/TeamService';
 
@@ -40,6 +44,10 @@ class App extends Component {
     this.setState({ currentUser: user});
   }
 
+  updateUserTeams = (teams) => {
+    this.setState({ userTeams: teams})
+  }
+
   updateCurrentTeam = (team) => {
     console.log("app.js update current team", {team})
     this.setState({ 
@@ -51,29 +59,29 @@ class App extends Component {
   updateCurrentProject = (project) => {
     console.log("app.js update current project", {project})
     this.setState({ currentProject: project });
-    // this.getProjectTasks(project._id);
   }
-
-  // getProjectTasks = (projectId) => {
-  //   TASK_SERVICE
-  //     .getProjectTasks(projectId)
-  //     .then(tasksFromServer => {
-  //       const { tasks } = tasksFromServer.data;
-  //     })
-  //     .catch(err => console.log({ err }));
-  // }
 
   render() {
     return (
       <div className="App">
         <BrowserRouter>
 
-          <Navbar currentUser={this.state.currentUser} onUserChange={this.updateUser} />
+          {
+            this.state.currentUser
+            ? <SideNav 
+                    currentUser={this.state.currentUser}
+                    userTeams={this.state.userTeams}
+                    userProjects={this.state.userProjects}
+                    userTasks={this.state.userTasks}
+                    onUserChange={this.updateUser}
+                    />
+            : <Navbar currentUser={this.props.currentUser} onUserChange={this.updateUser} />
+          }
 
           <Switch>
             <Route 
               exact path='/' 
-              render={props => <Home {...props} currentUser={this.state.currentUser}/>} 
+              render={props => <Landing {...props} currentUser={this.state.currentUser} onUserChange={this.updateUser}/>} 
             />
             <Route 
               exact path='/signup' 
@@ -83,6 +91,7 @@ class App extends Component {
               exact path='/login' 
               render={props => <Login {...props} currentUser={this.state.currentUser} onUserChange={this.updateUser} />}
             />
+
             {this.state.userLoading ?
             <div>Loading...</div>
             :
@@ -98,6 +107,25 @@ class App extends Component {
                   onUserChange={this.updateUser} 
                   updateCurrentTeam={this.updateCurrentTeam}
                   updateCurrentProject={this.updateCurrentProject}
+                />}
+            />}
+
+            {this.state.userLoading ?
+            <div>Loading...</div>
+            :
+            <ProtectedRoute
+              path='/home'
+              authorized={this.state.currentUser}
+              redirect={'/login'}
+              render={props => 
+                <Home {...props} 
+                  currentUser={this.state.currentUser}
+                  currentTeam={this.state.currentTeam}
+                  currentProject={this.state.currentProject}
+                  onUserChange={this.updateUser} 
+                  updateCurrentTeam={this.updateCurrentTeam}
+                  updateCurrentProject={this.updateCurrentProject}
+                  updateUserTeams={this.updateUserTeams}
                 />}
             />}
           </Switch>

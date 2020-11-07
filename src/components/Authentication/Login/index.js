@@ -23,7 +23,7 @@ export default class Login extends Component {
                 const { user } = responseFromServer.data;
                 // lift user up to App.js
                 this.props.onUserChange(user);
-                this.props.history.push('/profile'); // redirect back to the home page
+                this.props.history.push('/home'); // redirect back to the home page
             })
             .catch(err => {
                 if (err.response && err.response.data) {
