@@ -106,7 +106,10 @@ export default class Profile extends Component {
                             currentUser={this.props.currentUser} 
                             newTeam={this.newTeam}/>                        
                         <div className='teams'>
-                            <h4>Your Teams</h4>
+                            <div>
+                                <h4>Your Teams</h4>
+                                <button>newTeam</button>
+                            </div>
                             <div className='team-list'>
                                 {   // should only display teams related to the currently authenticated user
                                     this.state.teams?.map(team => 

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import AUTH_SERVICE from '../../services/AuthService';
+import './style.css';
 
 const Navbar = props => {
 
@@ -13,11 +14,21 @@ const Navbar = props => {
 
     return (
         <nav>
-            <Link to='/'> Home </Link>
-            <Link to='/signup'> Signup </Link>
-            <Link to='/login'> Login </Link>
-            <Link to='/profile'> Profile </Link>
-            <button onClick={logoutAndLiftUserState}> Logout </button>
+            <div>
+                <Link to='/'> Home </Link>
+            </div>
+            {
+                props.currentUser
+                ? <div>
+                    <Link to='/profile'> Profile </Link>
+                    <button onClick={logoutAndLiftUserState}> Logout </button>
+                </div>
+                : <div>
+                    <Link to='/signup'> Signup </Link>
+                    <Link to='/login'> Login </Link>
+                </div>
+
+            }
         </nav>
     )
 

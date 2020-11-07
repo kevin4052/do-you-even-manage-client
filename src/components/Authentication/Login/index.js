@@ -34,28 +34,25 @@ export default class Login extends Component {
 
     render() {
         return (
-            <section>
-                <form onSubmit={this.handleFormSubmission}>
-                    <label>
-                        Email:
-                        <input
-                            name='email'
-                            type='email'
-                            placeholder='john@ironhack.com'
-                            value={this.state.email}
-                            onChange={this.handleInputChange}
-                        />
-                    </label>
-                    <label>
-                        Password:
-                        <input
-                            name='password'
-                            type='password'
-                            placeholder='**********'
-                            value={this.state.password}
-                            onChange={this.handleInputChange}
-                        />
-                    </label>
+            <section className='center-content'>
+                <form className='form' onSubmit={this.handleFormSubmission}>
+                    <h3>Login</h3>
+                    <input
+                        name='email'
+                        type='email'
+                        placeholder='Email address'
+                        value={this.state.email}
+                        onChange={this.handleInputChange}
+                    />
+                    <br/>
+                    <input
+                        name='password'
+                        type='password'
+                        placeholder='Password'
+                        value={this.state.password}
+                        onChange={this.handleInputChange}
+                    />
+                    <br/>
                     <button> Login </button>
                 </form>
                 {this.state.message && <div> {this.state.message} </div>}

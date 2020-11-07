@@ -22,15 +22,16 @@ class App extends Component {
     currentProject: null,
     currentProjectTasks: null,
     userTasks: [],
-    userTeams: []
+    userTeams: [],
+    userLoading: true,
   }
 
-  componentDidMount = () => {
-    AUTH_SERVICE
+  componentDidMount = async () => {
+    await AUTH_SERVICE
       .getAuthenticatedUser()
       .then(responseFromServer => {
         const { user } = responseFromServer.data;
-        this.setState({ currentUser: user });
+        this.setState({ currentUser: user, userLoading: false });
       })
       .catch(err => console.log({ err }));
   }
@@ -82,6 +83,9 @@ class App extends Component {
               exact path='/login' 
               render={props => <Login {...props} currentUser={this.state.currentUser} onUserChange={this.updateUser} />}
             />
+            {this.state.userLoading ?
+            <div>Loading...</div>
+            :
             <ProtectedRoute
               path='/profile'
               authorized={this.state.currentUser}
@@ -95,7 +99,7 @@ class App extends Component {
                   updateCurrentTeam={this.updateCurrentTeam}
                   updateCurrentProject={this.updateCurrentProject}
                 />}
-            />
+            />}
           </Switch>
 
         </BrowserRouter>

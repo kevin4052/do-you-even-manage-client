@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import AUTH_SERVICE from '../../../services/AuthService';
-import './styling.css';
+import './style.css';
 
 export default class Signup extends Component {
     state = {
@@ -38,8 +38,8 @@ export default class Signup extends Component {
 
     render() {
         return (
-            <section id='signup'>
-                <form className='signup-form' onSubmit={this.handleFormSubmission}>
+            <section className='center-content'>
+                <form className='form' onSubmit={this.handleFormSubmission}>
                     <h3>Signup</h3>
                     
                     <input

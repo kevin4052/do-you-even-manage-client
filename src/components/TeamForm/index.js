@@ -36,9 +36,8 @@ export default class TeamForm extends Component {
 
     render() {
         return (
-            <div>
-                <form onSubmit={this.handleFormSubmit}>
-                    <label>
+            <div className='center-content'>
+                <form className='form' onSubmit={this.handleFormSubmit}>
                         {/* Team name: */}
                         <input 
                             name='name' 
@@ -46,7 +45,6 @@ export default class TeamForm extends Component {
                             placeholder='team name'
                             value={this.state.name}
                             onChange={this.handleInputChange}/>
-                    </label>
                     <button> Create a Team </button>
                 </form>
             </div>
