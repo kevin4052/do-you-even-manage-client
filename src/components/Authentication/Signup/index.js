@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import AUTH_SERVICE from '../../../services/AuthService';
+import './styling.css';
 
 export default class Signup extends Component {
     state = {
@@ -37,51 +38,45 @@ export default class Signup extends Component {
 
     render() {
         return (
-            <section>
-                <form onSubmit={this.handleFormSubmission}>
-                    <label>
-                    First name:
+            <section id='signup'>
+                <form className='signup-form' onSubmit={this.handleFormSubmission}>
+                    <h3>Signup</h3>
+                    
                     <input
                         name='firstName'
                         type='text'
-                        placeholder='John'
+                        placeholder='First name'
                         value={this.state.username}
                         onChange={this.handleInputChange}
                     />
-                    </label>
-                    <label>
-                    Last name:
+                    <br/>
                     <input
                         name='lastName'
                         type='text'
-                        placeholder='Wick'
+                        placeholder='Last name'
                         value={this.state.username}
                         onChange={this.handleInputChange}
                     />
-                    </label>
-                    <label>
-                    Email:
+                    <br/>
                     <input
                         name='email'
                         type='email'
-                        placeholder='john@ironhack.com'
+                        placeholder='Email address'
                         value={this.state.email}
                         onChange={this.handleInputChange}
                     />
-                    </label>
-                    <label>
-                    Password:
+                    <br/>
                     <input
                         name='password'
                         type='password'
-                        placeholder='**********'
+                        placeholder='Password'
                         value={this.state.password}
                         onChange={this.handleInputChange}
                     />
-                    </label>
+                    <br/>                    
                     <button> Signup </button>
+                    {this.state.message && <div> {this.state.message} </div>}
                 </form>
-                {this.state.message && <div> {this.state.message} </div>}
             </section>
         )
     }
