@@ -1,18 +1,35 @@
 @import "variables", "mixins";
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+// @media (prefers-reduced-motion: no-preference) {
+//   .App-logo {
+//     animation: App-logo-spin infinite 20s linear;
+//   }
+// }
+
+// @keyframes App-logo-spin {
+//   from {
+//     transform: rotate(0deg);
+//   }
+//   to {
+//     transform: rotate(360deg);
+//   }
+// }
+
+body {
+  font-family: 'Montserrat', sans-serif;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.active {
+  color: #51bcda;
+  opacity: 1;
+}
+
+.collapse {
+  display: none;
+}
+
+.show {
+  display: block;
 }
 
 .sidenav {
@@ -24,31 +41,111 @@
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.65);
   background: linear-gradient(#66615b,#000 80%);
-  overflow-x: hidden;
+  overflow: hidden;
   padding-top: 20px;
   color: white;
   text-align: center;
 
+  &-wrapper {
+    padding: 0 15px ;
+    font-size: 1rem;
+  }
+
   img {
-    width: 20px;
-    padding: 10px;
+    width: 34px;
+    height: 34px;
+    padding: 5px;
     background: white;
     border-radius: 50%;
   }
     .logo {
-      @include center-content;
-      
+      display: flex;
+      align-items: center;
+      margin: 0 15px;
+      border-bottom: 1px solid white;
+      padding-bottom: 15px;
+
+      img {
+        margin-right: 2rem;
+      }
+
+      a {
+        text-decoration: none;
+        color: white;
+      }
     }
 }
 
 .user {
-  &-info {
-    @include center-content;
-    justify-content: space-evenly;
+  display: flex;
+  align-items: center;;
+  border-bottom: 1px solid white;
+  position: relative;
+  margin: 1rem 0 0;
+  padding-bottom: 1rem;
 
-    img {
-      padding: 0;
-      width: 30px;
+  .photo {
+    margin: 0 2.5rem 0 0;
+  }
+
+  img {
+    padding: 0;
+    width: 40px;
+    height: 40px;
+  }
+
+  &-info {
+    padding: 1rem 0;
+    font-size: 1.25rem;
+
+    .caret {
+      float: right;
+      position: absolute;
+      right: 9px;
+      top: 50%;
+      transform: translateY(-37%);
+    }
+
+  }
+}
+
+.nav {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+
+  li {
+    list-style-type: none;
+    position: relative;
+    font-size: 1rem;
+    line-height: 30px;
+    opacity: .7;
+    margin: 2rem 0;
+
+    .list-info {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-right: 10px;
+      color: white;
+      text-decoration: none;
+      transition: all 0.3s ease-in-out;
+      // z-index: 5;
+
+      .icon {
+        font-size: 1.5rem;
+        z-index: 0;
+      }
+      &-title {
+        z-index: 0;
+      }
+      .caret {
+        z-index: 0;
+      }
+    }
+
+    .list-info:hover {
+      cursor: pointer;
     }
   }
 }
