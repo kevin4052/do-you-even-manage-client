@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './App.css';
+import './App.scss';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
 // import Navbar from './components/Navbar';
@@ -21,12 +21,12 @@ import Navbar from './components/Navbar';
 class App extends Component {
   state ={
     currentUser: null,
+    userTeams: [],
+    userTasks: [],
     currentTeam: null,
     currentTeamProjects: null,
     currentProject: null,
     currentProjectTasks: null,
-    userTasks: [],
-    userTeams: [],
     userLoading: true,
   }
 
@@ -48,17 +48,8 @@ class App extends Component {
     this.setState({ userTeams: teams})
   }
 
-  updateCurrentTeam = (team) => {
-    console.log("app.js update current team", {team})
-    this.setState({ 
-      currentTeam: team,
-      currentProject: null,
-     });
-  }
-
-  updateCurrentProject = (project) => {
-    console.log("app.js update current project", {project})
-    this.setState({ currentProject: project });
+  updateUserTasks = (tasks) => {
+    this.setState({ userTasks: tasks})
   }
 
   render() {
@@ -74,6 +65,8 @@ class App extends Component {
                     userProjects={this.state.userProjects}
                     userTasks={this.state.userTasks}
                     onUserChange={this.updateUser}
+                    updateUserTeams={this.updateUserTeams}
+                    updateUserTasks={this.updateUserTasks}
                     />
             : <Navbar currentUser={this.props.currentUser} onUserChange={this.updateUser} />
           }
@@ -122,9 +115,6 @@ class App extends Component {
                   currentUser={this.state.currentUser}
                   currentTeam={this.state.currentTeam}
                   currentProject={this.state.currentProject}
-                  onUserChange={this.updateUser} 
-                  updateCurrentTeam={this.updateCurrentTeam}
-                  updateCurrentProject={this.updateCurrentProject}
                   updateUserTeams={this.updateUserTeams}
                 />}
             />}

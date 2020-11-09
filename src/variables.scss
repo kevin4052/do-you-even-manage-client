@@ -1,0 +1,8 @@
+@function calcRem($size) {
+    $remSize: $size / 16px;
+    @return $remSize * 1rem;
+}
+
+$button-background: #000080;
+$general-padding: 0 calcRem(40px);
+$width: 100vw;
