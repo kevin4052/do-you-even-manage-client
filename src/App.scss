@@ -17,6 +17,7 @@
 
 body {
   font-family: 'Montserrat', sans-serif;
+  color: #000;
 }
 
 .active {
@@ -32,9 +33,55 @@ body {
   display: block;
 }
 
-a {
-  text-decoration: none;
-  color: white;
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  color: #000;
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+
+  &-content {
+    display: flex;
+    flex-direction: column;
+    background-color: #fefefe;
+    margin: 230px auto 0;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 330px;
+
+    /* The Close Button */
+    .close {
+      color: #aaaaaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+      color: #000;
+      text-decoration: none;
+      cursor: pointer;
+    }
+  }
+
+  input {
+    height: 1.5rem;
+    margin: 1rem 0;
+    border: 1px solid #000000;
+    border-radius: 5px;
+  }
+}
+
+.display {
+  display: flex;
+  flex-direction: column;
 }
 
 .sidenav {
@@ -56,6 +103,11 @@ a {
     font-size: 1rem;
   }
 
+  a {
+    text-decoration: none;
+    color: white;
+  }
+
   img {
     width: 34px;
     height: 34px;
@@ -72,11 +124,6 @@ a {
 
       img {
         margin-right: 2rem;
-      }
-
-      a {
-        text-decoration: none;
-        color: white;
       }
     }
 }
@@ -103,6 +150,11 @@ a {
     padding: 1rem 0;
     font-size: 1.25rem;
 
+    &-block {
+      display: flex;
+      align-items: center;
+    }
+
     button {
 
       &.onClickBtn {
@@ -117,14 +169,23 @@ a {
         left: 0;
         z-index: 5;
       }
+
+      &.onClickBtn:hover {
+        cursor: pointer;
+      }
+
+      &.onClickBtn:focus {
+        outline: none;
+        border: none;
+      }
     }
 
     .caret {
       float: right;
       position: absolute;
       right: 9px;
-      top: 50%;
-      transform: translateY(-37%);
+      // top: 50%;
+      // transform: translateY(-37%);
     }
 
   }
@@ -144,9 +205,18 @@ a {
       color: transparent;
       box-shadow: none;
       position: absolute;
-      // border: none;
+      border: none;
       left: 0;
       z-index: 5;
+    }
+
+    &.onClickBtn:hover {
+      cursor: pointer;
+    }
+
+    &.onClickBtn:focus {
+      outline: none;
+      border: none;
     }
   }
 
@@ -168,6 +238,21 @@ a {
       text-decoration: none;
       transition: all 0.3s ease-in-out;
       // z-index: 5;
+
+    }
+        .collapse {
+          .teams {
+            &-info {
+              display: flex;
+              align-items: center;
+              justify-content: flex-start;
+  
+              svg {
+                margin-right: 1.5rem;
+                font-size: 1.25rem;
+              }
+            }
+          }
 
       .icon {
         font-size: 1.5rem;
@@ -193,6 +278,10 @@ a {
   right: 0;
   bottom: 0;
   width: calc(100% - 260px);
+}
+
+.general-padding {
+  padding: 1rem;
 }
 
 .flex-row {

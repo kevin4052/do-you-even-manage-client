@@ -19,6 +19,9 @@ const AUTH_SERVICE = {
   },
   getAuthenticatedUser() {
     return service.get('/api/isLoggedIn');
+  },
+  getAllUsers() {
+    return service.get('/api/get-users')
   }
 };
 

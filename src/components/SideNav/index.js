@@ -7,6 +7,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
 import { faTasks } from '@fortawesome/free-solid-svg-icons';
 import { faUsers } from '@fortawesome/free-solid-svg-icons';
+import { faTh } from '@fortawesome/free-solid-svg-icons';
+import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
+import TeamForm from '../TeamForm';
 
 export default class SideNav extends Component {
     state = {
@@ -52,6 +55,16 @@ export default class SideNav extends Component {
         }
     }
 
+    createTeamForm = (event) => {
+        const modalClasslist = event.target.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.childNodes[2].classList;
+        console.log({ modalClasslist });
+
+        modalClasslist.contains('display')
+        ? modalClasslist.remove('display')
+        : modalClasslist.add('display')
+
+    }
+
     render() {
         console.log('side nav team props', this.props.userTeams)
         return (
@@ -66,12 +79,12 @@ export default class SideNav extends Component {
                 <div className='sidenav-wrapper'>
 
                     <div className="user">
-                        <div className='photo'>
-                            <img src={this.props.currentUser?.profileImg} alt='profile img'/>
-                        </div>
                         <div className='user-info'>
                             <button className='onClickBtn' onClick={this.itemIsActive}></button>
-                            <div>
+                            <div className='user-info-block'>
+                                <div className='photo'>
+                                    <img src={this.props.currentUser?.profileImg} alt='profile img'/>
+                                </div>
                                 <span>{this.props.currentUser?.firstName}</span>
                                 <div className='caret'>
                                     <FontAwesomeIcon icon={faCaretDown} />
@@ -92,7 +105,7 @@ export default class SideNav extends Component {
                             <button className='onClickBtn' onClick={this.itemIsActive}></button>
                             <div className='list-info'  >
                                 <div className='icon'>
-                                    <FontAwesomeIcon icon={faUsers} />
+                                    <FontAwesomeIcon icon={faTh} />
                                 </div>
                                 <div>My Teams</div>
                                 <div className='caret'>
@@ -100,12 +113,25 @@ export default class SideNav extends Component {
                                 </div>
                             </div>
                             <ul className='collapse'>
+                                <li>
+                                    <button className='onClickBtn' onClick={this.createTeamForm}></button>
+                                    <div>
+                                        <FontAwesomeIcon icon={faPlusCircle} />
+                                        <div>Create a Team</div>
+                                    </div>
+                                </li>
                                 {
                                     this.props.userTeams?.map(team =>
                                     <>
-                                        <li key={team._id } className=''>
-                                            <button className='onClickBtn' onClick={this.itemIsActive}></button>
-                                            <div>{team.name}</div>
+                                        <li key={team._id} className='teams'>
+                                            <Link to={`/team/${team._id}`}>
+                                                <button className='onClickBtn'></button>
+                                            </Link>
+                                            
+                                            <div className='teams-info'>
+                                                <FontAwesomeIcon icon={faTh} />
+                                                <div>{team.name}</div>
+                                            </div>
                                             <ul className='collapse'>
                                                 {
                                                     team.projects.map(project => 
@@ -133,6 +159,9 @@ export default class SideNav extends Component {
                         </li>
                     </ul>
                 </div>
+                <TeamForm 
+                    currentUser={this.props.currentUser}
+                    updateUserTeams={this.props.updateUserTeams}/>
             </div>
         )
     }

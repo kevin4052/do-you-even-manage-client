@@ -15,6 +15,7 @@ import SideNav from './components/SideNav';
 import Navbar from './components/Navbar';
 import ProjectDetails from './components/ProjectDetails';
 import MyTasks from './components/MyTasks';
+import TeamDetails from './components/TeamDetails';
 // import TEAM_SERVICE from './services/TeamService';
 // import TASK_SERVICE from './services/TaskService';
 // import TEAM_SERVICE from './services/TeamService';
@@ -107,6 +108,15 @@ class App extends Component {
               render={props => 
                 <MyTasks {...props} 
                   currentUser={this.state.currentUser} 
+                  onUserChange={this.updateUser}
+                  />}
+            />
+
+            <Route 
+              exact path={'/team/:teamId'}
+              render={props => 
+                <TeamDetails {...props} 
+                  currentUser={this.state.currentUser}
                   onUserChange={this.updateUser}
                   />}
             />
