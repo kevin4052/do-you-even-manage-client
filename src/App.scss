@@ -32,6 +32,11 @@ body {
   display: block;
 }
 
+a {
+  text-decoration: none;
+  color: white;
+}
+
 .sidenav {
   width: 260px;
   position: fixed;
@@ -98,6 +103,22 @@ body {
     padding: 1rem 0;
     font-size: 1.25rem;
 
+    button {
+
+      &.onClickBtn {
+        width: 100%;
+        height: 70px;
+        background-color: transparent;
+        color: transparent;
+        box-shadow: none;
+        position: absolute;
+        border: none;
+        top: 0;
+        left: 0;
+        z-index: 5;
+      }
+    }
+
     .caret {
       float: right;
       position: absolute;
@@ -114,6 +135,21 @@ body {
   margin: 0;
   padding: 0;
 
+  button {
+
+    &.onClickBtn {
+      width: 100%;
+      height: 32px;
+      background-color: transparent;
+      color: transparent;
+      box-shadow: none;
+      position: absolute;
+      // border: none;
+      left: 0;
+      z-index: 5;
+    }
+  }
+
   li {
     list-style-type: none;
     position: relative;
@@ -121,6 +157,7 @@ body {
     line-height: 30px;
     opacity: .7;
     margin: 2rem 0;
+    z-index: 2;
 
     .list-info {
       display: flex;

@@ -13,6 +13,8 @@ import AUTH_SERVICE from './services/AuthService';
 import Landing from './components/LandingPage';
 import SideNav from './components/SideNav';
 import Navbar from './components/Navbar';
+import ProjectDetails from './components/ProjectDetails';
+import MyTasks from './components/MyTasks';
 // import TEAM_SERVICE from './services/TeamService';
 // import TASK_SERVICE from './services/TaskService';
 // import TEAM_SERVICE from './services/TeamService';
@@ -46,6 +48,10 @@ class App extends Component {
 
   updateUserTeams = (teams) => {
     this.setState({ userTeams: teams})
+  }
+
+  updateCurrentProject = (project) => {
+    this.setState({ currentProject: project})
   }
 
   updateUserTasks = (tasks) => {
@@ -85,6 +91,26 @@ class App extends Component {
               render={props => <Login {...props} currentUser={this.state.currentUser} onUserChange={this.updateUser} />}
             />
 
+            <Route 
+              exact path={'/project/:projectId'}
+              render={props => 
+                <ProjectDetails {...props} 
+                  currentUser={this.state.currentUser} 
+                  onUserChange={this.updateUser}
+                  updateCurrentProject={this.updateCurrentProject}
+                  currentProject={this.state.currentProject}
+                  />}
+            />
+            
+            <Route 
+              exact path={'/my-tasks'}
+              render={props => 
+                <MyTasks {...props} 
+                  currentUser={this.state.currentUser} 
+                  onUserChange={this.updateUser}
+                  />}
+            />
+
             {this.state.userLoading ?
             <div>Loading...</div>
             :
@@ -113,6 +139,7 @@ class App extends Component {
               render={props => 
                 <Home {...props} 
                   currentUser={this.state.currentUser}
+                  onUserChange={this.updateUser} 
                   currentTeam={this.state.currentTeam}
                   currentProject={this.state.currentProject}
                   updateUserTeams={this.updateUserTeams}

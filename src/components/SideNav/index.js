@@ -33,22 +33,23 @@ export default class SideNav extends Component {
     logoutAndLiftUserState = () => {
         AUTH_SERVICE
             .logout()
-            .then(() => this.props.onUserChange(null))
+            .then(() => {
+                this.props.onUserChange(null);
+                this.props.history.push('/')
+            })
             .catch(err => console.log({ err }));
     }
 
     itemIsActive = (event) => {
-        let listClassName = event.target.className;
-        // let ulClassName = event.target.parentElement.children[1].className;
+        const listClassName = event.target.parentNode.children[2].classList;
 
-        console.log( {listClassName} );
-        // console.log( {ulClassName} );
+        console.log({event: event.target.parentNode.children[2].classList})
 
-        !listClassName.split(' ').includes('active')
-        ? listClassName += ' active'
-        : listClassName = listClassName.split(' ').filter(name => name !== 'active').join(' ');
-
-        event.target.className = listClassName;
+        if(listClassName.contains('show')) {
+            listClassName.remove('show');
+        } else {
+            listClassName.add('show')
+        }
     }
 
     render() {
@@ -69,25 +70,26 @@ export default class SideNav extends Component {
                             <img src={this.props.currentUser?.profileImg} alt='profile img'/>
                         </div>
                         <div className='user-info'>
+                            <button className='onClickBtn' onClick={this.itemIsActive}></button>
                             <div>
                                 <span>{this.props.currentUser?.firstName}</span>
                                 <div className='caret'>
                                     <FontAwesomeIcon icon={faCaretDown} />
                                 </div>
                             </div>
-                            <div className='collapse show'>
-                                <ul>
+                            <div className='collapse'>
+                                <ul className='collapse show'>
                                     <li>
                                         <button onClick={this.logoutAndLiftUserState}> Logout </button>
                                     </li>
                                 </ul>
                             </div>
-                        </div>
-                        
+                        </div>                        
                     </div>
 
                     <ul className="nav">
-                        <li className='' onClick={this.itemIsActive}>
+                        <li className=''>
+                            <button className='onClickBtn' onClick={this.itemIsActive}></button>
                             <div className='list-info'  >
                                 <div className='icon'>
                                     <FontAwesomeIcon icon={faUsers} />
@@ -101,11 +103,14 @@ export default class SideNav extends Component {
                                 {
                                     this.props.userTeams?.map(team =>
                                     <>
-                                        <li key={team._id} className=''>{team.name}
+                                        <li key={team._id } className=''>
+                                            <button className='onClickBtn' onClick={this.itemIsActive}></button>
+                                            <div>{team.name}</div>
                                             <ul className='collapse'>
                                                 {
                                                     team.projects.map(project => 
-                                                    <li key={project._id}>{project.name}</li>)
+                                                    <Link to={`/project/${project._id}`}><li key={project._id}>{project.name}</li></Link>
+                                                    )
                                                 }
                                             </ul>
                                         </li>
@@ -114,7 +119,8 @@ export default class SideNav extends Component {
                                 }
                             </ul>
                         </li>
-                        <li className='' onClick={this.itemIsActive} >
+                        <li className=''>
+                            <Link to='/my-tasks'><button className='onClickBtn'></button></Link>
                             <div className='list-info' >
                                 <div className='icon'>
                                     <FontAwesomeIcon icon={faTasks} />

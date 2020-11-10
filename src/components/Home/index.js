@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import AUTH_SERVICE from '../../services/AuthService';
 
 // import TEAM_SERVICE from '../../services/TeamService';
 // import PROJECT_SERVICE from '../../services/ProjectService';
@@ -12,6 +13,13 @@ export default class Home extends Component {
     }
 
     componentDidMount = async () => {
+        AUTH_SERVICE
+            .getAuthenticatedUser()
+            .then(responseFromServer => {
+                const { user } = responseFromServer.data;
+                this.props.onUserChange(user);
+            })
+            .catch(err => console.log({ err }));
     }
 
     render() {
@@ -20,7 +28,7 @@ export default class Home extends Component {
                 <div className='main-panel'>
                     <div>
                        <h2>Home page</h2>
-                        <h4>Welcome {this.props.currentUser?.firstname}</h4>
+                        <h4>Welcome {this.props.currentUser?.firstName} {this.props.currentUser.lastName[0].toUpperCase()}</h4>
                     </div>
                 </div>
             </div>
