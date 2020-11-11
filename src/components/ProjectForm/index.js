@@ -1,12 +1,24 @@
 import React, { Component } from 'react';
+import AUTH_SERVICE from '../../services/AuthService';
 import PROJECT_SERVICE from '../../services/ProjectService';
+import TEAM_SERVICE from '../../services/TeamService';
 
 
 export default class ProjectForm extends Component {
     state = {
         name: '',
         description: '',
-        team: this.props.currentTeam?._id
+        team: null
+    }
+
+    componentDidMount = () => {
+        AUTH_SERVICE
+            .getAllUsers()
+            .then(responseFromServer => {
+                const { users } = responseFromServer.data;
+                this.setState({ usersList: users});
+            })
+            .catch(err => console.log({ err }));
     }
 
     handleInputChange = event => {
@@ -15,27 +27,52 @@ export default class ProjectForm extends Component {
     }
 
     handleFormSubmit = (event) => {
-        event.preventDefault();
         const { name, description, team } = this.state;
+        const modalClasslist = event.target.parentNode.parentNode.classList;
+
+        console.log({submit: modalClasslist})
 
         PROJECT_SERVICE
-            .createProject({ name, description, team })
+            .createProject({ name, description, team: this.props.teamId })
             .then(projectFromServer => {
-                const { project } = projectFromServer.data;
-                console.log({ project });
-                this.props.newProject(project);
+                // const { project } = projectFromServer.data;
                 this.setState({ 
                     name: '',
                     description: ''
                 });
+
+                TEAM_SERVICE
+                    .getUserTeams()
+                    .then(responseFromServer => {
+                        const { teams } = responseFromServer.data;
+                        this.props.updateUserTeams(teams);
+                        modalClasslist.remove('display');
+                    })
+                    .catch(err => console.log({ err }));
+
             })
             .catch(err => console.log({ err }));
     }
 
+    cancelForm = (event) => {
+        const modalClasslist = event.target.parentNode.parentNode.classList;
+        const selector = event.target.parentNode.childNodes[1];
+
+        console.log({ modalClasslist})
+
+        modalClasslist.remove('display');
+        selector.selectedIndex = 0;
+        
+        this.setState({
+            name: '',
+            members: []
+        })
+    }
+
     render() {
         return (
-            <div>
-                <form onSubmit={this.handleFormSubmit}>
+            <div className='modal'>
+                <div className='modal-content'>
                     <label>
                         {/* Project name: */}
                         <input 
@@ -54,8 +91,9 @@ export default class ProjectForm extends Component {
                             value={this.state.description}
                             onChange={this.handleInputChange}/>
                     </label>
-                    <button> Create a Project </button>
-                </form>
+                    <button onClick={this.cancelForm}> Cancel </button>
+                    <button onClick={this.handleFormSubmit}> Create a Project </button>
+                </div>
             </div>
         )
     }

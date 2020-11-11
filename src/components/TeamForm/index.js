@@ -27,9 +27,10 @@ export default class TeamForm extends Component {
     }
 
     handleFormSubmit = (event) => {
-        event.preventDefault();
         const { name, owner, members } = this.state;
         const memberIDs = members.map(member => member._id);
+        const modalClasslist = event.target.parentNode.parentNode.classList;
+        const selector = event.target.parentNode.childNodes[1];
 
         TEAM_SERVICE
             .createTeam({ name, owner, members: memberIDs })
@@ -45,6 +46,8 @@ export default class TeamForm extends Component {
                     .then(responseFromServer => {
                         const { teams } = responseFromServer.data;
                         this.props.updateUserTeams(teams);
+                        modalClasslist.remove('display');
+                        selector.selectedIndex = 0;
                     })
                     .catch(err => console.log({ err }));
             })
@@ -75,8 +78,8 @@ export default class TeamForm extends Component {
     }
 
     render() {
-        console.log({users: this.state.usersList})
-        console.log({members: this.state.members})
+        // console.log({users: this.state.usersList})
+        // console.log({members: this.state.members})
         return (
             <div className='modal'>
                 <div className='modal-content'>

@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import AUTH_SERVICE from '../../services/AuthService'
 import TEAM_SERVICE from '../../services/TeamService'
+import ProjectForm from '../ProjectForm';
+import TeamProjects from './TeamProjects';
 
 export default class TeamDetails extends Component {
     state = {
@@ -26,6 +28,18 @@ export default class TeamDetails extends Component {
         if (teamId !== team._id) this.componentDidMount();
     }
 
+    showProjectModal = (event) => {
+        const modalClassList = event.target.parentNode.parentNode.childNodes[2].classList;
+        modalClassList.contains('display')
+        ? modalClassList.remove('display')
+        : modalClassList.add('display')
+    }
+
+    updateUserTeams = (teams) => {
+        this.props.updateUserTeams(teams);
+        this.componentDidMount();
+    }
+
     render() {
         return (
             <div className='main-panel general-padding'>
@@ -34,7 +48,9 @@ export default class TeamDetails extends Component {
                     <h1>{this.state.team?.name}</h1> :
                     <p>Loading...</p>
                 }
-                
+
+                <TeamProjects showProjectModal={this.showProjectModal} projects={this.state.team?.projects}/>          
+                <ProjectForm updateUserTeams={this.updateUserTeams} teamId={this.state.team?._id}/>          
             </div>
         )
     }

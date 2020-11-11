@@ -29,9 +29,7 @@ body {
   display: none;
 }
 
-.show {
-  display: block;
-}
+
 
 .modal {
   display: none; /* Hidden by default */
@@ -77,6 +75,10 @@ body {
     border: 1px solid #000000;
     border-radius: 5px;
   }
+}
+
+.show {
+  display: block;
 }
 
 .display {
@@ -139,6 +141,30 @@ body {
   .photo {
     margin: 0 2.5rem 0 0;
   }
+
+  .collapse {
+
+    li {
+      list-style-type: none;
+      position: relative;
+      font-size: 1rem;
+      line-height: 30px;
+      opacity: .7;
+      margin: 2rem 0;
+      z-index: 1;
+
+      .user-options {
+        display: flex;
+        align-items: center;
+
+        svg {
+          font-size: 1.25rem;
+          margin-right: 2rem;
+        }
+      }
+    }
+  }
+
 
   img {
     padding: 0;
@@ -227,7 +253,7 @@ body {
     line-height: 30px;
     opacity: .7;
     margin: 2rem 0;
-    z-index: 2;
+    z-index: 1;
 
     .list-info {
       display: flex;
@@ -240,28 +266,22 @@ body {
       // z-index: 5;
 
     }
-        .collapse {
-          .teams {
-            &-info {
-              display: flex;
-              align-items: center;
-              justify-content: flex-start;
-  
-              svg {
-                margin-right: 1.5rem;
-                font-size: 1.25rem;
-              }
-            }
+    .collapse {
+      .teams {
+        &-info {
+          display: flex;
+          align-items: center;
+          justify-content: flex-start;
+
+          svg {
+            margin-right: 1.5rem;
+            font-size: 1.25rem;
           }
+        }
+      }
 
       .icon {
         font-size: 1.5rem;
-        z-index: 0;
-      }
-      &-title {
-        z-index: 0;
-      }
-      .caret {
         z-index: 0;
       }
     }
@@ -280,8 +300,9 @@ body {
   width: calc(100% - 260px);
 }
 
+// need to rethink the main-panel width
 .general-padding {
-  padding: 1rem;
+  // padding: 1rem;
 }
 
 .flex-row {
@@ -292,4 +313,25 @@ body {
 .float-right {
   float: right;
   width: calc(#{width} - 260px);
+}
+
+
+.team-projects {
+  display: flex;
+  flex-direction: column;
+  // width: 330px;
+  border: 1px solid black;
+  box-shadow: 1px 2px 11px -5px black;
+  position: absolute;
+  margin: 2rem;
+
+  table, th, td {
+    border-bottom: 1px solid black;
+  }
+
+  table {
+    text-align: center;
+    margin: 1rem;
+    border-collapse: collapse;
+  }
 }

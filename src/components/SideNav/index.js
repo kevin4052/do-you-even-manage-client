@@ -6,9 +6,10 @@ import TASK_SERVICE from '../../services/TaskService';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
 import { faTasks } from '@fortawesome/free-solid-svg-icons';
-import { faUsers } from '@fortawesome/free-solid-svg-icons';
+import { faUser } from '@fortawesome/free-solid-svg-icons';
 import { faTh } from '@fortawesome/free-solid-svg-icons';
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
+import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import TeamForm from '../TeamForm';
 
 export default class SideNav extends Component {
@@ -90,13 +91,24 @@ export default class SideNav extends Component {
                                     <FontAwesomeIcon icon={faCaretDown} />
                                 </div>
                             </div>
-                            <div className='collapse'>
-                                <ul className='collapse show'>
-                                    <li>
-                                        <button onClick={this.logoutAndLiftUserState}> Logout </button>
-                                    </li>
-                                </ul>
-                            </div>
+                            <ul className='collapse'>
+                                <li>
+                                    <Link to={`/profile`}>
+                                        <button className='onClickBtn'></button>
+                                    </Link>
+                                    <div className='user-options'>
+                                        <FontAwesomeIcon icon={faUser} />
+                                        <div>PROFILE</div>
+                                    </div>                                        
+                                </li>
+                                <li>
+                                    <button className='onClickBtn' onClick={this.logoutAndLiftUserState}></button>
+                                    <div className='user-options'>
+                                        <FontAwesomeIcon icon={faSignOutAlt} />
+                                        <div>LOGOUT</div>
+                                    </div>
+                                </li>
+                            </ul>
                         </div>                        
                     </div>
 
