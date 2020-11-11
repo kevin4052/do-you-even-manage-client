@@ -74,7 +74,7 @@ export default class SideNav extends Component {
                     <Link to='/home'>
                         <img src='/logo192.png' alt='app logo'/>
                     </Link>
-                    <Link to='/home'>APP LOGO</Link>
+                    <Link to='/home'>DO YOU EVEN MANAGE</Link>
                 </div>
 
                 <div className='sidenav-wrapper'>
@@ -125,9 +125,9 @@ export default class SideNav extends Component {
                                 </div>
                             </div>
                             <ul className='collapse'>
-                                <li>
+                                <li className='teams'>
                                     <button className='onClickBtn' onClick={this.createTeamForm}></button>
-                                    <div>
+                                    <div className='teams-info'>
                                         <FontAwesomeIcon icon={faPlusCircle} />
                                         <div>Create a Team</div>
                                     </div>

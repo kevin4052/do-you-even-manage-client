@@ -26,13 +26,14 @@ export default class ProjectDetails extends Component {
             .catch(err => console.log({ err }));
     }
     render() {
-        // console.log(this.props.currentProject);
+        console.log(this.state?.project);
         return (
             <div className='flex-row'>
                 <div className='main-panel'>
                     <h3>Project name: {this.state.project?.name}</h3>
                     <ul>
                         <li>description: {this.state.project?.description}</li>
+                        <li>team: {this.state.project?.team.name}</li>
                         <li>Tasks:
                             <ul>
                                 {
