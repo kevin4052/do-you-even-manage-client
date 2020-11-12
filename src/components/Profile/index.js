@@ -97,74 +97,8 @@ export default class Profile extends Component {
 
     render() {
         return (
-            <div>
-                <h2>Profile page of {this.props.currentUser.firstName}</h2>
-                <div style={{display: "flex"}}>
-
-                    <div className='team-section'>
-                        <TeamForm 
-                            currentUser={this.props.currentUser} 
-                            newTeam={this.newTeam}/>                        
-                        <div className='teams'>
-                            <div>
-                                <h4>Your Teams</h4>
-                                <button>newTeam</button>
-                            </div>
-                            <div className='team-list'>
-                                {   // should only display teams related to the currently authenticated user
-                                    this.state.teams?.map(team => 
-                                        <label key={team._id}>
-                                            <input type="radio" name='teams' onChange={this.handleCurrentTeamChange} value={team._id} />
-                                            {team.name}
-                                        </label>
-                                    )
-                                }
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className='project-section'>
-                        {
-                            this.props.currentTeam &&
-                            <ProjectForm 
-                                currentUser={this.props.currentUser} 
-                                currentTeam={this.props.currentTeam} 
-                                newProject={this.newProject}/>
-                        }
-                        <div className='projects'>
-                            <h4>Your Projects</h4>
-                            <div className='project-list'>
-                                {   // should only display projects related to the currently selected team
-                                    this.state.projects?.map(project => 
-                                        <label key={project._id}>
-                                            <input type="radio" name='projects' onChange={this.handleCurrentProjectChange} value={project._id} />
-                                            {project.name}
-                                        </label>
-                                    )
-                                }
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className='task-section'>
-                        {
-                            this.props.currentProject &&
-                            <TaskForm 
-                                currentProject={this.props.currentProject}
-                                newTask={this.newTask}/>
-                        }
-                        <div className='tasks'>
-                            <h4>Tasks</h4>
-                            <ul className='task-list'>
-                                {   // should only display task related to the currently selected project
-                                    this.state.tasks?.map(task => 
-                                    <li key={task._id}>{task.title}</li>
-                                    )
-                                }
-                            </ul>
-                        </div>
-                    </div>
-                </div>
+            <div className='main-panel'>
+                <h2>Profile page of {this.props.currentUser.firstName}</h2>                
             </div>
         )
     }

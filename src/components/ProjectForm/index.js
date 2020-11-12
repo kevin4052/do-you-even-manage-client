@@ -27,7 +27,7 @@ export default class ProjectForm extends Component {
     }
 
     handleFormSubmit = (event) => {
-        const { name, description, team } = this.state;
+        const { name, description } = this.state;
         const modalClasslist = event.target.parentNode.parentNode.classList;
 
         console.log({submit: modalClasslist})

@@ -44,6 +44,7 @@ class App extends Component {
   }
 
   updateUser = (user) => {
+    // let userLoading = user === null;
     this.setState({ currentUser: user});
   }
 

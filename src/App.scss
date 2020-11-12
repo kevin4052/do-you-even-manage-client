@@ -319,19 +319,24 @@ body {
 .team-projects {
   display: flex;
   flex-direction: column;
-  // width: 330px;
+  width: 80%;
   border: 1px solid black;
   box-shadow: 1px 2px 11px -5px black;
   position: absolute;
   margin: 2rem;
 
-  table, th, td {
-    border-bottom: 1px solid black;
-  }
+}
 
-  table {
-    text-align: center;
-    margin: 1rem;
-    border-collapse: collapse;
-  }
+table, th, td {
+  border-bottom: 1px solid black;
+}
+
+table {
+  text-align: center;
+  margin: 1rem;
+  border-collapse: collapse;
+}
+
+td {
+  height: 2rem;
 }

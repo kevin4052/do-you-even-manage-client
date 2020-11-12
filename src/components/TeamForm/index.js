@@ -91,7 +91,7 @@ export default class TeamForm extends Component {
                         onChange={this.handleInputChange}/>
 
                     <div>
-                        <label for="members">Select members:</label>
+                        <label htmlFor="members">Select members:</label>
                         <select name="members" id="members">
                             <option value={null}></option>
                             {

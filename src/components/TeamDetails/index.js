@@ -49,7 +49,7 @@ export default class TeamDetails extends Component {
                     <p>Loading...</p>
                 }
 
-                <TeamProjects showProjectModal={this.showProjectModal} projects={this.state.team?.projects}/>          
+                <TeamProjects updateUserTeams={this.updateUserTeams} showProjectModal={this.showProjectModal} projects={this.state.team?.projects}/>          
                 <ProjectForm updateUserTeams={this.updateUserTeams} teamId={this.state.team?._id}/>          
             </div>
         )
