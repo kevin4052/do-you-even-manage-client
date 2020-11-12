@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import AUTH_SERVICE from '../../services/AuthService';
-import TEAM_SERVICE from '../../services/TeamService';
-import TASK_SERVICE from '../../services/TaskService';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
 import { faTasks } from '@fortawesome/free-solid-svg-icons';
@@ -10,12 +8,13 @@ import { faUser } from '@fortawesome/free-solid-svg-icons';
 import { faTh } from '@fortawesome/free-solid-svg-icons';
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
+
+import AUTH_SERVICE from '../../services/AuthService';
+import TEAM_SERVICE from '../../services/TeamService';
+import TASK_SERVICE from '../../services/TaskService';
 import TeamForm from '../TeamForm';
 
 export default class SideNav extends Component {
-    state = {
-
-    }
 
     componentDidMount = () => {
         Promise.all([
@@ -46,9 +45,7 @@ export default class SideNav extends Component {
 
     itemIsActive = (event) => {
         const listClassName = event.target.parentNode.children[2].classList;
-
-        console.log({event: event.target.parentNode.children[2].classList})
-
+        // console.log({event: event.target.parentNode.children[2].classList});
         if(listClassName.contains('show')) {
             listClassName.remove('show');
         } else {
@@ -57,17 +54,16 @@ export default class SideNav extends Component {
     }
 
     createTeamForm = (event) => {
-        const modalClasslist = event.target.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.childNodes[2].classList;
-        console.log({ modalClasslist });
-
+        const modalClasslist = event.target.parentNode.parentNode.parentNode
+        .parentNode.parentNode.parentNode.childNodes[2].classList;
+        // console.log({ modalClasslist });
         modalClasslist.contains('display')
         ? modalClasslist.remove('display')
         : modalClasslist.add('display')
-
     }
 
     render() {
-        console.log('side nav team props', this.props.userTeams)
+        // console.log('side nav team props', this.props.userTeams);
         return (
             <div className='sidenav'>
                 <div className="logo">

@@ -39,7 +39,7 @@ export default class TaskForm extends Component {
             .createTask({ title, description, project, dueDate, assigned: assignedID, checklist, isComplete })
             .then(projectFromServer => {
                 const { task } = projectFromServer.data;
-                console.log({ task });
+                // console.log({ task });
                 this.props.addNewTask(task);
                 modalClasslist.remove('display');
                 this.setState({

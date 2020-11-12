@@ -11,7 +11,7 @@ export default class ProjectDetails extends Component {
 
     componentDidMount = () => {
         const { projectId } = this.props.match.params;
-        console.log({ projectId })
+        // console.log({ projectId })
 
         Promise
             .all([AUTH_SERVICE.getAuthenticatedUser(), PROJECT_SERVICE.getOneProject(projectId)])
@@ -19,7 +19,7 @@ export default class ProjectDetails extends Component {
                 const { user } = responseFromServer[0].data;
                 const { project } = responseFromServer[1].data;
 
-                console.log({ project });
+                // console.log({ project });
 
                 this.props.onUserChange(user);
                 // this.props.updateCurrentProject(project);

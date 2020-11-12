@@ -30,7 +30,7 @@ export default class ProjectForm extends Component {
         const { name, description } = this.state;
         const modalClasslist = event.target.parentNode.parentNode.classList;
 
-        console.log({submit: modalClasslist})
+        // console.log({submit: modalClasslist})
 
         PROJECT_SERVICE
             .createProject({ name, description, team: this.props.teamId })
@@ -58,7 +58,7 @@ export default class ProjectForm extends Component {
         const modalClasslist = event.target.parentNode.parentNode.classList;
         const selector = event.target.parentNode.childNodes[1];
 
-        console.log({ modalClasslist})
+        // console.log({ modalClasslist})
 
         modalClasslist.remove('display');
         selector.selectedIndex = 0;

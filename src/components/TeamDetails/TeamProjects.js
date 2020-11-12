@@ -6,8 +6,9 @@ import TEAM_SERVICE from '../../services/TeamService';
 export default class TeamProjects extends Component {
 
     showProjectModal = (event) => {
-        const modal = event.target.parentNode.parentNode.childNodes[2].classList;
-        console.log({ modalTest: modal})
+        // const modal = event.target.parentNode.parentNode.childNodes;
+        // let filteredEvent = [...modal].filter(node => node.classList.contains('modal'))[0];
+        // console.log({ modalTest: filteredEvent})
         this.props.showProjectModal(event);
     }
 

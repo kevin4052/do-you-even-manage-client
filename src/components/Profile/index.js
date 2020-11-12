@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import AUTH_SERVICE from '../../services/AuthService';
 import TASK_SERVICE from '../../services/TaskService';
 import TEAM_SERVICE from '../../services/TeamService';
-import TeamForm from '../TeamForm';
-import ProjectForm from '../ProjectForm';
-import TaskForm from '../TaskForm';
+// import TeamForm from '../TeamForm';
+// import ProjectForm from '../ProjectForm';
+// import TaskForm from '../TaskForm';
 import PROJECT_SERVICE from '../../services/ProjectService';
 
 export default class Profile extends Component {
@@ -19,7 +19,7 @@ export default class Profile extends Component {
             .getAuthenticatedUser()
             .then(userFromServer => {
                 const { user } = userFromServer.data;
-                console.log({ user });
+                // console.log({ user });
                 this.props.onUserChange(user)
             })
             .catch(err => console.log({ err }));
@@ -29,14 +29,14 @@ export default class Profile extends Component {
             .getUserTeams()
             .then(responseFromServer => {
                 const { teams } = responseFromServer.data;
-                console.log({ teams });
+                // console.log({ teams });
 
                 this.setState((preState) => ({
                     teams: preState.teams.concat(teams)
                 }));
                 
                 const userTeamIDs = this.state.teams.map(team => team._id);
-                console.log({ userTeamIDs });
+                // console.log({ userTeamIDs });
 
                 // get all team projects
                 userTeamIDs.forEach(async teamId => {     
@@ -45,7 +45,7 @@ export default class Profile extends Component {
                         .getTeamProjects(teamId)
                         .then(responseFromServer => {
                             const { projects } = responseFromServer.data;
-                            console.log({ projects });
+                            // console.log({ projects });
         
                             projects &&
                             this.setState((preState) => ({
