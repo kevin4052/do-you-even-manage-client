@@ -96,7 +96,7 @@ export default class TeamForm extends Component {
                             <option value={null}></option>
                             {
                                 this.state.usersList?.map(user => 
-                                <option key={user._id} value={user._id} >{user.firstName} {user.lastName}</option>)
+                                <option key={`member${user._id}`} value={user._id} >{user.firstName} {user.lastName}</option>)
                             }
                         </select>
                         <button onClick={(user) => this.addMember(user)}>add</button>

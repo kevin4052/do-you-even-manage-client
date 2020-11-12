@@ -129,26 +129,16 @@ export default class SideNav extends Component {
                                     </div>
                                 </li>
                                 {
-                                    this.props.userTeams?.map(team =>
-                                    <>
+                                    this.props.userTeams?.map(team =>                                    
                                         <li key={team._id} className='teams'>
                                             <Link to={`/team/${team._id}`}>
                                                 <button className='onClickBtn'></button>
-                                            </Link>
-                                            
+                                            </Link>                                            
                                             <div className='teams-info'>
                                                 <FontAwesomeIcon icon={faTh} />
                                                 <div>{team.name}</div>
-                                            </div>
-                                            <ul className='collapse'>
-                                                {
-                                                    team.projects.map(project => 
-                                                    <Link to={`/project/${project._id}`}><li key={project._id}>{project.name}</li></Link>
-                                                    )
-                                                }
-                                            </ul>
-                                        </li>
-                                    </>
+                                            </div>                                            
+                                        </li>                                    
                                     )
                                 }
                             </ul>

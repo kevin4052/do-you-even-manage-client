@@ -7,7 +7,6 @@ export default class TaskForm extends Component {
         title: '',
         description: '',
         dueDate: '',
-        project: this.props.currentProject?._id,
         assigned: '',
         checklist: [],
         isComplete: false,
@@ -28,18 +27,28 @@ export default class TaskForm extends Component {
         const assignedID = event.target.parentNode.childNodes[2].childNodes[1].value;
         const { 
             title, 
-            description, 
-            project,
+            description,
             dueDate,
             checklist,
             isComplete
          } = this.state;
 
+
+         console.log({taskProject: this.props.currentProject._id})
+
         TASK_SERVICE
-            .createTask({ title, description, project, dueDate, assigned: assignedID, checklist, isComplete })
+            .createTask(
+                {   title, 
+                    description, 
+                    project: this.props.currentProject._id, 
+                    dueDate: new Date(dueDate), 
+                    assigned: assignedID, 
+                    checklist, 
+                    isComplete 
+                })
             .then(projectFromServer => {
                 const { task } = projectFromServer.data;
-                // console.log({ task });
+                console.log({ task });
                 this.props.addNewTask(task);
                 modalClasslist.remove('display');
                 this.setState({
@@ -91,7 +100,7 @@ export default class TaskForm extends Component {
                             <option value={null}></option>
                             {
                                 this.props.currentProject?.team.members?.map(member => 
-                                <option key={member._id} value={member._id} >{member.firstName} {member.lastName}</option>)
+                                <option key={`task${member._id}`} value={member._id} >{member.firstName} {member.lastName}</option>)
                             }
                         </select>
                     </div>

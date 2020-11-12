@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import AUTH_SERVICE from '../../services/AuthService';
 import TASK_SERVICE from '../../services/TaskService';
+import MyTaskTable from './MyTaskTable';
 
 export default class MyTasks extends Component {
     state = {
@@ -26,6 +27,7 @@ export default class MyTasks extends Component {
         return (
             <div className='flex-row'>
                 <div className='main-panel'>
+                    <MyTaskTable userTasks={this.state.tasks}/>
                     <ul>
                         {
                             this.state.tasks?.map(task => 
