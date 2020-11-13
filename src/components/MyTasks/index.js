@@ -28,12 +28,6 @@ export default class MyTasks extends Component {
             <div className='flex-row'>
                 <div className='main-panel'>
                     <MyTaskTable userTasks={this.state.tasks}/>
-                    <ul>
-                        {
-                            this.state.tasks?.map(task => 
-                            <li key={task._id}>{task.title}</li>)
-                        }
-                    </ul>
                 </div>
             </div>
         )

@@ -12,7 +12,7 @@ export default class MyTaskTable extends Component {
     render() {
         return (
             <div>
-                <table>
+                <table className='task-table'>
                     <thead>
                         <tr>
                             <th></th>

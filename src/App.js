@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import './App.scss';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
-// import Navbar from './components/Navbar';
 import Home from './components/Home';
 import Signup from './components/Authentication/Signup';
 import ProtectedRoute from './components/ProtectedRoute';
@@ -16,9 +15,6 @@ import Navbar from './components/Navbar';
 import ProjectDetails from './components/ProjectDetails';
 import MyTasks from './components/MyTasks';
 import TeamDetails from './components/TeamDetails';
-// import TEAM_SERVICE from './services/TeamService';
-// import TASK_SERVICE from './services/TaskService';
-// import TEAM_SERVICE from './services/TeamService';
 
 
 class App extends Component {
