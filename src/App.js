@@ -40,8 +40,11 @@ class App extends Component {
   }
 
   updateUser = (user) => {
-    // let userLoading = user === null;
-    this.setState({ currentUser: user});
+    let userLoading = user === null;
+    this.setState({ 
+      currentUser: user,
+      userLoading
+    });
   }
 
   updateUserTeams = (teams) => {
@@ -129,11 +132,9 @@ class App extends Component {
               render={props => 
                 <Profile {...props} 
                   currentUser={this.state.currentUser}
-                  currentTeam={this.state.currentTeam}
-                  currentProject={this.state.currentProject}
                   onUserChange={this.updateUser} 
                   updateCurrentTeam={this.updateCurrentTeam}
-                  updateCurrentProject={this.updateCurrentProject}
+                  userTeams={this.state.userTeams}
                 />}
             />}
 

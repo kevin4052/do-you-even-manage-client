@@ -23,11 +23,11 @@ const TEAM_SERVICE = {
   deleteTeam(teamData) {
     return service.post(`/api/teams/${teamData}/delete`, {});
   },
-  updateTeam(teamData) {
-    return service.post(`/api/teams/${teamData}/update`, {});
+  updateTeam(teamId, teamData) {
+    return service.post(`/api/teams/${teamId}/update`, {teamData});
   },
-  removeTeamMember(teamData) {
-    return service.post(`/api/teams/${teamData}/remove-member`, {});
+  removeTeamMember(teamId, teamData) {
+    return service.post(`/api/teams/${teamId}/remove-member`, {teamData});
   }
 };
 

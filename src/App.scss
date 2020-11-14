@@ -135,8 +135,8 @@ body {
   align-items: center;;
   border-bottom: 1px solid white;
   position: relative;
-  margin: 1rem 0 0;
-  padding-bottom: 1rem;
+  // margin: 1rem 0 0;
+  // padding-bottom: 1rem;
 
   .photo {
     margin: 0 2.5rem 0 0;
@@ -343,4 +343,60 @@ td {
 
 .task-table {
   width: 90%;
+}
+
+
+// user profile
+.profile-card {
+  display: flex;
+  width: 330px;
+  margin: 1rem;
+  padding: 1rem;
+  border: 1px solid black;
+
+  img {
+    width: 125px;
+    height: 125px;
+  }
+
+  &-info {
+
+    .user-info{
+      p {
+        font-size: 1rem;
+      }
+    }
+
+    .user-stats {
+      display: flex;
+
+      div {
+        text-align: center;
+        margin: 0 1rem;
+      }
+    }
+  }
+}
+
+.members {
+  width: 330px;
+  margin: 1rem;
+  border: 1px solid black;
+}
+
+.member-card {
+  display: flex;
+  border: 1px solid black;
+  border-radius: 5px;
+  // width: 100%;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  margin: 0.25rem;
+
+  img {
+    $size: 35px;
+    width: $size;
+    height: $size;
+    margin-right: 1rem;
+  }
 }

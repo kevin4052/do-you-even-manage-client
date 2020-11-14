@@ -17,6 +17,7 @@ export default class MyTaskTable extends Component {
                         <tr>
                             <th></th>
                             <th>Task Title</th>
+                            <th>Project</th>
                             <th>Team</th>
                             <th>Due</th>
                         </tr>
@@ -24,7 +25,7 @@ export default class MyTaskTable extends Component {
                     <tbody>
                         <tr>
                             <td><FontAwesomeIcon icon={faPlusCircle} /></td>
-                            <td colSpan="3" >Add a task</td>
+                            <td colSpan="4" >Add a task</td>
                         </tr>
                         {
                             this.props.userTasks?.map(task =>
@@ -32,6 +33,7 @@ export default class MyTaskTable extends Component {
                                     <td>X</td>
                                     <td>{task.title}</td>
                                     <td>{task.project?.name}</td>
+                                    <td>{task.project?.team.name}</td>
                                     <td>{this.convertDate(task.dueDate)}</td>
                                 </tr>
                             )

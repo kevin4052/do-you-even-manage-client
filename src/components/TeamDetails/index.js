@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import AUTH_SERVICE from '../../services/AuthService';
 import TEAM_SERVICE from '../../services/TeamService';
+import MemberCard from '../MemberCard';
 import ProjectForm from '../ProjectForm';
+import EditForm from '../TeamForm/EditForm';
 import TeamProjects from './TeamProjects';
 
 export default class TeamDetails extends Component {
@@ -18,6 +20,8 @@ export default class TeamDetails extends Component {
             const { team } = responseFromServer[1].data;
             this.setState({ team });
             this.props.onUserChange(user);
+
+            // console.log({ team })
         })
         .catch(err => console.log({ err }));
     }
@@ -25,7 +29,12 @@ export default class TeamDetails extends Component {
     componentDidUpdate = () => {
         const { teamId } = this.props.match.params;
         const { team } = this.state;
-        if (teamId !== team._id) this.componentDidMount();
+        if (teamId !== team?._id) this.componentDidMount();
+    }
+
+    updateUserTeams = (teams) => {
+        this.props.updateUserTeams(teams);
+        this.componentDidMount();
     }
 
     showProjectModal = (event) => {
@@ -37,9 +46,13 @@ export default class TeamDetails extends Component {
         : modalClassList.add('display')
     }
 
-    updateUserTeams = (teams) => {
-        this.props.updateUserTeams(teams);
-        this.componentDidMount();
+    showTeamEditForm = (event) => {
+        console.log({ edit: event.target.parentNode.childNodes[5] })
+        const modalClassList = event.target.parentNode.childNodes[5].classList;
+        modalClassList.contains('display')
+        ? modalClassList.remove('display')
+        : modalClassList.add('display')
+
     }
 
     deleteTeam = () => {
@@ -58,23 +71,51 @@ export default class TeamDetails extends Component {
         .catch(err => console.log({ err }));
     }
 
+    updateTeamDetails = (team) => {
+        this.setState({ team });
+    }
+
     render() {
+        console.log({state: this.state});
         return (
             <div className='main-panel general-padding'>
                 {
-                    this.state.team ?
-                    <h1>{this.state.team?.name}</h1> :
+                    this.state.team 
+                    ?
+                    <div>
+                        <h1>{this.state.team?.name}</h1>
+                        <div className='members'>
+                        {
+                            this.state.team?.members.map(member => 
+                                <div key={`team-member${member._id}`}>
+                                    <MemberCard  member={member}/>
+                                </div>
+                            )
+                        }
+                            
+                        </div>
+                    </div>
+                    :
                     <p>Loading...</p>
                 }
+                <button onClick={this.showTeamEditForm}>Edit Team</button>
                 <button onClick={this.deleteTeam}>Delete Team</button>
 
-                <TeamProjects 
-                    updateUserTeams={this.updateUserTeams}
-                    showProjectModal={this.showProjectModal}
-                    projects={this.state.team?.projects}/>
-                <ProjectForm 
-                    updateUserTeams={this.updateUserTeams} 
-                    teamId={this.state.team?._id}/>
+                {this.state.team && (
+                    <>
+                    <TeamProjects 
+                        updateUserTeams={this.updateUserTeams}
+                        showProjectModal={this.showProjectModal}
+                        projects={this.state.team.projects}/>
+                    <ProjectForm 
+                        updateUserTeams={this.updateUserTeams} 
+                        teamId={this.state.team._id}/>
+                    <EditForm 
+                        team={this.state.team}
+                        updateTeamDetails={this.updateTeamDetails}
+                    />
+                    </>
+                    )}
             </div>
         )
     }

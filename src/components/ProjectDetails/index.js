@@ -43,6 +43,11 @@ export default class ProjectDetails extends Component {
         : modalClasslist.add('display')
     }
 
+    convertDate = (date) => {
+        const options = { year: 'numeric', month: 'long', day: 'numeric' };
+        return new Date(date).toLocaleDateString([],options);
+    }
+
     render() {
         // console.log(this.state?.project);
         return (
@@ -56,15 +61,16 @@ export default class ProjectDetails extends Component {
                             <ul>
                                 {
                                     this.state.project?.tasks.map(task => 
-                                    <li key={task._id}>
+                                    <li key={`project-tasks${task._id}`}>
                                         <div><b>Task Title:</b> {task.title}</div>
                                         <div><b>Task description</b>: {task.description}</div>
                                         <div><b>Completed:</b> {task.isCompleted ? 'yes' : 'no'}</div>
-                                        <div><b>Started:</b> {task.createdAt}</div>
+                                        <div><b>Started:</b> {this.convertDate(task.createdAt)}</div>
+                                        <div><b>due:</b> {this.convertDate(task.dueDate)}</div>
                                         <div><b>checklist:</b>
                                             <ul>
                                                 {
-                                                    task.checklist.map(item => <li key={item}>{item}</li>)
+                                                    task.checklist.map(item => <li key={`projectdetail${item.checkItem}`}>{item.checkItem}</li>)
                                                 }
                                             </ul>
                                         </div>

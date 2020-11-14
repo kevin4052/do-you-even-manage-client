@@ -77,6 +77,28 @@ export default class TaskForm extends Component {
         });
     }
 
+    addItem = (event) => {
+        const { checklist } = this.state;
+        const input = event.target.parentNode.childNodes[0];
+        const checkItem = input.value.trim();
+
+        console.log({ checklist });
+        console.log({ input })
+        
+        const checklistItem = {
+            checkItem,
+            isComplete: false
+        }
+        console.log({ checklistItem })
+
+        checklist.push(checklistItem);
+
+        console.log({ checklist })
+
+        this.setState({ checklist });
+        input.value = '';
+    }
+
     render() {
         // console.log("team members", this.props.currentProject?.team.members)
         return (
@@ -103,6 +125,17 @@ export default class TaskForm extends Component {
                                 <option key={`task${member._id}`} value={member._id} >{member.firstName} {member.lastName}</option>)
                             }
                         </select>
+                    </div>
+                    <div>
+                        <input type='text' placeholder='checklist item' />
+                        <button onClick={this.addItem}>Add to do item</button>
+                        <ul>
+                            {
+                                this.state.checklist.map(item => 
+                                <li key={`checkItem${item.checkItem}`}>{item.checkItem}</li>
+                                )
+                            }
+                        </ul>
                     </div>
                     <input 
                         name='dueDate' 
