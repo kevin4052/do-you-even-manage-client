@@ -20,6 +20,7 @@ export default class Signup extends Component {
     handleFormSubmission = event => {
         event.preventDefault();
         const { firstName, lastName, email, password } = this.state;
+        console.log({ firstName, lastName, email, password })
 
         AUTH_SERVICE
             .signup({ firstName, lastName, email, password })
@@ -27,7 +28,7 @@ export default class Signup extends Component {
                 const { user } = responseFromServer.data;
                 // lift user up to App.js
                 this.props.onUserChange(user);
-                this.props.history.push('/profile'); // redirect back to the home page
+                this.props.history.push('/home'); // redirect back to the home page
             })
             .catch(err => {
                 if (err.response && err.response.data) {

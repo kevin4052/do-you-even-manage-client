@@ -8,7 +8,7 @@ export default class Landing extends Component {
     }
 
     updateUser = (user) => {
-        this.props.updateUser(user);
+        this.props.onUserChange(user);
     }
 
     displayLoginModal = (event) => {}
@@ -35,7 +35,7 @@ export default class Landing extends Component {
                     </div>
                     {
                         this.state.signup
-                        ?<Signup currentUser={this.props.currentUser} onUserChange={this.updateUser}/>
+                        ?<Signup onUserChange={this.updateUser}/>
                         :<div>
                             <h2>Project Management Tools</h2>
                             <p>to help you stay on track</p>

@@ -75,21 +75,29 @@ class App extends Component {
                     updateUserTeams={this.updateUserTeams}
                     updateUserTasks={this.updateUserTasks}
                     />
-            // : <Navbar currentUser={this.props.currentUser} onUserChange={this.updateUser} />
           }
 
           <Switch>
             <Route 
               exact path='/' 
-              render={props => <Landing {...props} currentUser={this.state.currentUser} onUserChange={this.updateUser}/>} 
+              render={props => 
+              <Landing {...props} 
+                currentUser={this.state.currentUser} 
+                onUserChange={this.updateUser}/>} 
             />
             <Route 
               exact path='/signup' 
-              render={props => <Signup {...props} currentUser={this.state.currentUser} onUserChange={this.updateUser} />}
+              render={props => 
+              <Signup {...props} 
+                currentUser={this.state.currentUser} 
+                onUserChange={this.updateUser} />}
             />
             <Route 
               exact path='/login' 
-              render={props => <Login {...props} currentUser={this.state.currentUser} onUserChange={this.updateUser} />}
+              render={props => 
+              <Login {...props} 
+                currentUser={this.state.currentUser} 
+                onUserChange={this.updateUser} />}
             />
 
             <Route 
