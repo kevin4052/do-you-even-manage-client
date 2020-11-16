@@ -53,7 +53,7 @@ export default class TaskDetails extends Component {
 
     handleFormSubmit = (event) => {
         const modalClasslist = event.target.parentNode.parentNode.classList;
-        const assignedID = event.target.parentNode.childNodes[4].childNodes[1].value;
+        const assignedID = event.target.parentNode.childNodes[3].childNodes[1].value;
         const { 
             title, 
             description,
@@ -63,7 +63,7 @@ export default class TaskDetails extends Component {
          } = this.state;
 
         //  console.log(modalClasslist)
-        //  console.log(assignedID)
+         console.log(assignedID)
 
         TASK_SERVICE
         .updateTask(
