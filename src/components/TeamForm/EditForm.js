@@ -4,23 +4,36 @@ import TEAM_SERVICE from '../../services/TeamService';
 
 export default class EditForm extends Component {
     state = {
-        name: this.props.team.name,
-        members: this.props.team.members,
+        teamId: '',
+        name: '',
+        members: null,
+        projects: null,
         usersList: null
     }
 
     componentDidMount = () => {
+        const { _id, name, members, projects } = this.props.team;
         console.log({props: this.props});
         AUTH_SERVICE
             .getAllUsers()
             .then(responseFromServer => {
                 const { users } = responseFromServer.data;
-                this.setState({ usersList: users});
+                this.setState({ 
+                    usersList: users,
+                    teamId: _id,
+                    name,
+                    members,
+                    projects
+
+                });
             })
             .catch(err => console.log({ err }));
     }
 
     componentDidUpdate = () => {
+        if (this.props.team._id !== this.state.teamId) {
+            this.componentDidMount();
+        }
 
     }
 
@@ -30,19 +43,23 @@ export default class EditForm extends Component {
     }
 
     handleFormSubmit = (event) => {
-        const { name, members } = this.state;
+        const { name, members, projects } = this.state;
         const memberIDs = members.map(member => member._id);
+        const projectIDs = projects.map(projects => projects._id);
         const modalClasslist = event.target.parentNode.parentNode.classList;
-        const selector = event.target.parentNode.childNodes[1];
+
+        console.log(name, memberIDs);
+        console.log({ modalClasslist })
 
         TEAM_SERVICE
-            .updateTeam(this.props.team._id, { name, members: memberIDs })
+            .updateTeam(this.state.teamId, { 
+                name, 
+                members: memberIDs.length === 0 ? this.props.currentUser._id : memberIDs, 
+                projects: projectIDs 
+            })
             .then(teamFromServer => {
-                // const { team } = teamFromServer.data;
-                this.setState({ 
-                    name: '',
-                    members: []
-                });
+                const { team } = teamFromServer.data;
+                console.log({ newTeamData: team })
 
                 TEAM_SERVICE
                     .getUserTeams()
@@ -50,7 +67,6 @@ export default class EditForm extends Component {
                         const { teams } = responseFromServer.data;
                         this.props.updateUserTeams(teams);
                         modalClasslist.remove('display');
-                        selector.selectedIndex = 0;
                     })
                     .catch(err => console.log({ err }));
             })
@@ -68,9 +84,11 @@ export default class EditForm extends Component {
 
     removeMember = (event) => {
         let { members } = this.state;
-        const memberToRemove = event.target.parentNode.__reactFiber$4iu0aulcgc8.key.slice(4);
+        const memberToRemove = event.target.parentNode.attributes.member.nodeValue;
         members = members.filter(member => member._id !== memberToRemove);
         this.setState({ members });
+        // const memberToRemove = event.target.parentNode.attributes.member.nodeValue
+        // console.log({ members })
     }
 
     cancelForm = (event) => {
@@ -81,7 +99,7 @@ export default class EditForm extends Component {
     }
 
     render() {
-        console.log({editSate: this.props.team});
+        console.log({editState: this.state});
         return (
             <div className='modal'>
                 <div className='modal-content'>
@@ -106,7 +124,7 @@ export default class EditForm extends Component {
                     <div>
                         {
                             this.state.members?.map(member => 
-                                <div className='' key={`edit${member._id}`}>
+                                <div className='' key={`edit${member._id}`} member={member._id}>
                                     <p>{member.firstName} {member.lastName}</p>
                                     <button onClick={this.removeMember}>X</button>
                                 </div>)
@@ -114,7 +132,7 @@ export default class EditForm extends Component {
                     </div>
                     
                     <button onClick={this.cancelForm}> Cancel </button>
-                    <button onClick={this.handleFormSubmit}> Create a Team </button>
+                    <button onClick={this.handleFormSubmit}> Edit Team </button>
                 </div>
             </div>
         )

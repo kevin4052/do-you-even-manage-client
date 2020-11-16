@@ -112,6 +112,8 @@ export default class TeamDetails extends Component {
                         teamId={this.state.team._id}/>
                     <EditForm 
                         team={this.state.team}
+                        currentUser={this.props.currentUser}
+                        updateUserTeams={this.updateUserTeams}
                         updateTeamDetails={this.updateTeamDetails}
                     />
                     </>

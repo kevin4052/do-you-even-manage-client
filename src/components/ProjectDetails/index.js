@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import AUTH_SERVICE from '../../services/AuthService';
 import PROJECT_SERVICE from '../../services/ProjectService';
+import TaskDetails from '../TaskDetails.js';
 // import TASK_SERVICE from '../../services/TaskService';
 import TaskForm from '../TaskForm';
 
@@ -43,9 +44,21 @@ export default class ProjectDetails extends Component {
         : modalClasslist.add('display')
     }
 
+    displayTask = (event) => {
+        const modalClasslist = event.target.parentNode.childNodes[2].classList;
+        modalClasslist.contains('display')
+        ? modalClasslist.remove('display')
+        : modalClasslist.add('display')
+    }
+
     convertDate = (date) => {
         const options = { year: 'numeric', month: 'long', day: 'numeric' };
         return new Date(date).toLocaleDateString([],options);
+    }
+
+    updateUserTeams = (teams) => {
+        this.props.updateUserTeams(teams);
+        this.componentDidMount();
     }
 
     render() {
@@ -53,37 +66,81 @@ export default class ProjectDetails extends Component {
         return (
             <div className='flex-row'>
                 <div className='main-panel'>
-                    <h3>Project name: {this.state.project?.name}</h3>
-                    <ul>
-                        <li>description: {this.state.project?.description}</li>
-                        <li>team: {this.state.project?.team.name}</li>
-                        <li>Tasks: <button onClick={this.displayTaskForm}>Add new Task</button>
-                            <ul>
-                                {
-                                    this.state.project?.tasks.map(task => 
-                                    <li key={`project-tasks${task._id}`}>
-                                        <div><b>Task Title:</b> {task.title}</div>
-                                        <div><b>Task description</b>: {task.description}</div>
-                                        <div><b>Completed:</b> {task.isCompleted ? 'yes' : 'no'}</div>
-                                        <div><b>Started:</b> {this.convertDate(task.createdAt)}</div>
-                                        <div><b>due:</b> {this.convertDate(task.dueDate)}</div>
-                                        <div><b>checklist:</b>
-                                            <ul>
-                                                {
-                                                    task.checklist.map(item => <li key={`projectdetail${item.checkItem}`}>{item.checkItem}</li>)
-                                                }
-                                            </ul>
+                    <div className='task-board'>
+                        <div className='task-board-header'>
+                            <h3>{this.state.project?.name}</h3>
+                            <button onClick={this.displayTaskForm}>Add new Task</button>
+                        </div>
+                        <div className='task-board-body'>
+                            <div className='col'>
+                                <div className='col-header'>
+                                    <h5>ToDo</h5>
+                                </div>
+                                <div className='col-body'>
+                                    {/* list of items */}
+                                    {
+                                        this.state.project?.tasks.map(task => 
+                                        <div className='task-card' key={`todo${task._id}`} task={task._id}>
+                                            <button onClick={this.displayTask}></button>
+                                            <p>{task.title}</p>
+                                            <TaskDetails 
+                                                currentProject={this.state.project} 
+                                                updateUserTeams={this.updateUserTeams} 
+                                                task={task}/>
                                         </div>
-                                    </li>)
-                                }
-                            </ul>
-                        </li>
-                    </ul>
+                                        )
+                                    }
+                                </div>
+                            </div>
+                            <div className='col'>
+                                <div className='col-header'>
+                                    <h5>In Progress</h5>
+                                </div>
+                                <div className='col-body'>
+                                    {/* list of items */}
+                                    {
+                                        this.state.project?.tasks.map(task => 
+                                        <div className='task-card' key={`progess${task._id}`} task={task._id}>
+                                            <button onClick={this.displayTask} ></button>
+                                            <p>{task.title}</p>
+                                            <TaskDetails 
+                                                currentProject={this.state.project} 
+                                                updateUserTeams={this.updateUserTeams} 
+                                                task={task}/>
+                                        </div>
+                                        )
+                                    }
+                                </div>
+                            </div>
+                            <div className='col'>
+                                <div className='col-header'>
+                                    <h5>Completed</h5>
+                                </div>
+                                <div className='col-body'>
+                                    {/* list of items */}
+                                    {
+                                        this.state.project?.tasks.map(task => 
+                                        <div className='task-card' key={`complete${task._id}`}>
+                                            <button onClick={this.displayTask}></button>
+                                            <p>{task.title}</p>
+                                            <TaskDetails 
+                                                currentProject={this.state.project} 
+                                                updateUserTeams={this.updateUserTeams} 
+                                                task={task}/>
+                                        </div>
+                                        )
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
                 </div>
                 <TaskForm
                     addNewTask={this.addNewTask}
                     currentUser={this.props.currentUser}
                     currentProject={this.state.project}/>
+                
             </div>
         )
     }

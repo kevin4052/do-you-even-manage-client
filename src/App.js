@@ -98,6 +98,7 @@ class App extends Component {
                 <ProjectDetails {...props} 
                   currentUser={this.state.currentUser} 
                   onUserChange={this.updateUser}
+                  updateUserTeams={this.updateUserTeams}
                   updateCurrentProject={this.updateCurrentProject}
                   currentProject={this.state.currentProject}
                   />}
