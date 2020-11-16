@@ -38,7 +38,7 @@ export default class Signup extends Component {
 
     render() {
         return (
-            <section className='center-content'>
+            <section className=' '>
                 <form className='form' onSubmit={this.handleFormSubmission}>
                     <h3>Signup</h3>
                     
