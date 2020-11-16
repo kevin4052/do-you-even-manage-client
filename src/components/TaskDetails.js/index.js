@@ -43,9 +43,12 @@ export default class TaskDetails extends Component {
         this.setState({ [name]: value });
     }
 
-    handleCheckBoxInput = (index) => {
-        console.log(index)
-
+    handleCheckBoxInput = (event) => {
+        const index = event.target.parentNode.attributes.index.value;
+        const { checklist } = this.state;
+        checklist[index].isComplete = !checklist[index].isComplete;
+        // console.log({ checklist })
+        this.setState({ checklist });
     }
 
     handleFormSubmit = (event) => {
@@ -123,13 +126,21 @@ export default class TaskDetails extends Component {
         return (
             <div className='modal'>
                 <div className='modal-content' onSubmit={this.handleFormSubmit}>
-                    <label htmlFor='title'>Title:</label>
-                    <input 
-                        name='title' 
-                        type='text'
-                        placeholder='Task title'
-                        value={this.state.title}
-                        onChange={this.handleInputChange}/>
+                    <div>
+                        <label>Title:
+                            <input 
+                                name='title' 
+                                type='text'
+                                placeholder='Task title'
+                                value={this.state.title}
+                                onChange={this.handleInputChange}/>
+                            </label>
+                        <label>
+                            <input type='checkbox' defaultChecked={this.state.isComplete} />
+                            Complete
+                        </label>
+                        
+                    </div>
                     <label htmlFor='description'>Description:</label>
                     <input 
                         name='description' 
@@ -155,11 +166,11 @@ export default class TaskDetails extends Component {
                         <ul>
                             {
                                 this.state.checklist.map((item, index) => 
-                                <li key={`checkItem${item.checkItem}`}>
+                                <li key={`checkItem${item.checkItem}`} index={index}>
                                     <input 
                                         type='checkbox' 
                                         defaultChecked={item.isComplete}
-                                        onChange={(index) => this.handleCheckBoxInput(index)}
+                                        onChange={this.handleCheckBoxInput}
                                         />
                                         {item.checkItem}
                                 </li>
