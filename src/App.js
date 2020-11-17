@@ -52,12 +52,12 @@ class App extends Component {
 
   updateUser = (user) => {
     // let userLoading = user === null;
-    // this.setState({ 
-    //   currentUser: user,
-    //   userLoading
-    // });
+    console.log('app.js update user')
+    this.setState({ 
+      currentUser: user
+    });
 
-    this.getCurrentUser();
+    // this.getCurrentUser();
 
   }
 

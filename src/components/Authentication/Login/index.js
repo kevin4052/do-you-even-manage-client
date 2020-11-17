@@ -21,11 +21,13 @@ export default class Login extends Component {
             .login({ email, password })
             .then(responseFromServer => {
                 const { user } = responseFromServer.data;
+                console.log({loggedInUser: user});
                 // lift user up to App.js
                 this.props.onUserChange(user);
                 this.props.history.push('/home'); // redirect back to the home page
             })
             .catch(err => {
+                console.log("error logging in")
                 if (err.response && err.response.data) {
                     return this.setState({ message: err.response.data.message });
                 }
