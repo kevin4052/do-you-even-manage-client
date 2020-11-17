@@ -11,7 +11,7 @@ import Login from './components/Authentication/Login';
 import AUTH_SERVICE from './services/AuthService';
 import Landing from './components/LandingPage';
 import SideNav from './components/SideNav';
-import Navbar from './components/Navbar';
+// import Navbar from './components/Navbar';
 import ProjectDetails from './components/ProjectDetails';
 import MyTasks from './components/MyTasks';
 import TeamDetails from './components/TeamDetails';
@@ -26,7 +26,7 @@ class App extends Component {
     currentTeamProjects: null,
     currentProject: null,
     currentProjectTasks: null,
-    userLoading: true,
+    userLoading: false,
   }
 
   componentDidMount = () => {
@@ -38,10 +38,11 @@ class App extends Component {
       .getAuthenticatedUser()
       .then(responseFromServer => {
         const { user } = responseFromServer.data;
-        this.setState({ currentUser: user, userLoading: false });
+        console.log({user});
+        this.setState({ currentUser: user });
       })
       .catch(err => {
-        this.setState({ currentUser: null, userLoading: true });
+        this.setState({ currentUser: null });
       });
   }
 
