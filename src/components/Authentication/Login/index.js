@@ -36,7 +36,7 @@ export default class Login extends Component {
 
     render() {
         return (
-            <section className='center-content'>
+            <section className='center-content modal display'>
                 <form className='form' onSubmit={this.handleFormSubmission}>
                     <h3>Login</h3>
                     <input
