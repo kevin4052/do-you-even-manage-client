@@ -18,15 +18,18 @@ import TeamDetails from './components/TeamDetails';
 
 
 class App extends Component {
-  state ={
-    currentUser: null,
-    userTeams: [],
-    userTasks: [],
-    currentTeam: null,
-    currentTeamProjects: null,
-    currentProject: null,
-    currentProjectTasks: null,
-    userLoading: false,
+  constructor(props) {
+    super(props);
+    this.state ={
+      currentUser: null,
+      userTeams: [],
+      userTasks: [],
+      currentTeam: null,
+      currentTeamProjects: null,
+      currentProject: null,
+      currentProjectTasks: null,
+      userLoading: false,
+    }
   }
 
   componentDidMount = () => {
