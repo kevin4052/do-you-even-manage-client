@@ -38,7 +38,7 @@ export default class SideNav extends Component {
             .logout()
             .then(() => {
                 this.props.onUserChange(null);
-                this.props.history.push('/')
+                // this.props.history.push('/')
             })
             .catch(err => console.log({ err }));
     }

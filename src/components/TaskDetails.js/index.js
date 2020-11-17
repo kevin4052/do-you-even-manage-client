@@ -96,14 +96,6 @@ export default class TaskDetails extends Component {
         // console.log({cancelForm: modalClasslist});
 
         modalClasslist.remove('display');
-        
-        this.setState({
-            title: '',
-            description: '',
-            dueDate: '',
-            assigned: '',
-            checklist: [],
-        });
     }
 
     addItem = (event) => {
