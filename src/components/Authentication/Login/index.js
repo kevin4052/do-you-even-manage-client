@@ -16,7 +16,7 @@ export default class Login extends Component {
     handleFormSubmission = event => {
         event.preventDefault();
         const { email, password } = this.state;
-
+        console.log('logging in');
         AUTH_SERVICE
             .login({ email, password })
             .then(responseFromServer => {
