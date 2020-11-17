@@ -45,6 +45,7 @@ class App extends Component {
         this.setState({ currentUser: user });
       })
       .catch(err => {
+        console.log('auth error')
         this.setState({ currentUser: null });
       });
   }
