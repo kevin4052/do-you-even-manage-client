@@ -29,22 +29,31 @@ class App extends Component {
     userLoading: true,
   }
 
-  componentDidMount = async () => {
-    await AUTH_SERVICE
+  componentDidMount = () => {
+    this.getCurrentUser()
+  }
+
+  getCurrentUser = () => {
+    AUTH_SERVICE
       .getAuthenticatedUser()
       .then(responseFromServer => {
         const { user } = responseFromServer.data;
         this.setState({ currentUser: user, userLoading: false });
       })
-      .catch(err => console.log({ err }));
+      .catch(err => {
+        this.setState({ currentUser: null, userLoading: true });
+      });
   }
 
   updateUser = (user) => {
-    let userLoading = user === null;
-    this.setState({ 
-      currentUser: user,
-      userLoading
-    });
+    // let userLoading = user === null;
+    // this.setState({ 
+    //   currentUser: user,
+    //   userLoading
+    // });
+
+    this.getCurrentUser();
+
   }
 
   updateUserTeams = (teams) => {
