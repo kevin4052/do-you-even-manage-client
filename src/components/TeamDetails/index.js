@@ -88,13 +88,7 @@ export default class TeamDetails extends Component {
                     <div>
                         <h1>{this.state.team?.name}</h1>
                         <div className='members'>
-                        {
-                            this.state.team?.members.map(member => 
-                                <div key={`team-member${member._id}`}>
-                                    <MemberCard  member={member}/>
-                                </div>
-                            )
-                        }
+                            <MemberCard members={this.state.team.members}/>
                             
                         </div>
                     </div>

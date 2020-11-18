@@ -454,17 +454,40 @@ td {
 .members {
   width: 330px;
   margin: 1rem;
-  border: 1px solid black;
+  // border: 1px solid black;
 }
 
 .member-card {
   display: flex;
+  flex-direction: column;
   border: 1px solid black;
   border-radius: 5px;
   // width: 100%;
   align-items: center;
   padding: 0.5rem 1rem;
   margin: 0.25rem;
+  
+  &-header {
+    width: 100%;
+    font-size: 1.25rem;
+    
+    h5 {
+      margin: 0.5rem;
+    }
+  }
+
+  &-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+
+    div {
+      display: flex;
+      align-items: center;
+      width: 100%;
+    }
+  }
 
   img {
     $size: 35px;
@@ -484,9 +507,12 @@ td {
 
 
   &-header {
+    width: 100%;
+    font-size: 1.25rem;
     padding: 0.25rem 1rem;
     border-radius: 12px;
     box-shadow: 1px 2px 11px -5px black;
+
   }
 
   &-body {
@@ -494,6 +520,8 @@ td {
     flex-wrap: wrap;
     justify-content: space-evenly;
     padding: 1rem;
+    align-items: center;
+    width: 100%;
 
     .col {
       display: flex;
@@ -590,6 +618,5 @@ td {
   button:focus {
     outline: none;
     border: none;
-  }
-  
+  }  
 }
