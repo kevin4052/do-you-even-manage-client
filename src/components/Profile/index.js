@@ -8,7 +8,8 @@ export default class Profile extends Component {
             firstName: null,
             lastName: null,
             email: null,
-            editForm: false
+            editForm: false,
+            deleteUser: false,
         }
     }
 
@@ -51,6 +52,22 @@ export default class Profile extends Component {
         .catch(err => console.log({ err }));
     }
 
+    deleteUser = () => {
+        const { deleteUser } = this.state;
+        this.setState({ deleteUser: !deleteUser});
+    }
+
+    // confirmDeleteUser = () => {
+    //     AUTH_SERVICE
+    //     .deleteUser()
+    //     .then(() => {
+
+    //     })
+    //     .catch(err => console.log({ err }));
+    // }
+
+
+
     render() {
         const { firstName, lastName, email, profileImg, teams, tasks } = this.props.currentUser;
 
@@ -79,6 +96,7 @@ export default class Profile extends Component {
                             </div>
                         </div>
                         <button onClick={() => this.editProfile()}>Edit</button>
+                        <button onClick={() => this.deleteUser()}>Delete</button>
                     </div>                
                 }
                 <div className='user-stats'>
@@ -91,6 +109,15 @@ export default class Profile extends Component {
                         <h3>TASKS</h3>
                     </div>
                 </div>
+                {
+                    this.state.deleteUser &&
+                    <div className='modal display'>
+                        <div className='modal-content delete-account'>
+                            <h4>Are you sure you want to delete your account</h4>
+                            <button onClick={this.confirmDeleteUser}>confirm</button>
+                        </div>
+                    </div>
+                }
             </div>
         )
     }

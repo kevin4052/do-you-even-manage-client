@@ -570,3 +570,26 @@ td {
   background: #e4e4e4;
   box-shadow: 1px 5px 5px -5px black;
 }
+
+.delete-account {
+
+  button {
+    background: #e60e0e;
+    color: white;
+    font-size: 1.25rem;
+    border-radius: 20px;
+    border: none;
+    padding: 0.5rem 0;
+  }
+
+  button:hover {
+    cursor: pointer;
+    background: red;
+  }
+
+  button:focus {
+    outline: none;
+    border: none;
+  }
+  
+}

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
-import TaskDetails from '../TaskDetails.js';
+// import TaskDetails from '../TaskDetails.js';
 
 export default class MyTaskTable extends Component {
     constructor(props) {
