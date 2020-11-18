@@ -4,8 +4,11 @@ import TASK_SERVICE from '../../services/TaskService';
 import MyTaskTable from './MyTaskTable';
 
 export default class MyTasks extends Component {
-    state = {
-        tasks: null
+    constructor(props) {
+        super(props);
+        this.state = {
+            tasks: null
+        }
     }
 
     componentDidMount = () => {

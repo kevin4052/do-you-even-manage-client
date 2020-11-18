@@ -27,7 +27,7 @@ const TASK_SERVICE = {
     return service.post(`/api/tasks/${taskId}/delete`);
   },
   updateTask(taskId, taskData) {
-    return service.post(`/api/tasks/${taskId}/update`, {taskData});
+    return service.post(`/api/tasks/${taskId}/update`, taskData);
   }
 };
 

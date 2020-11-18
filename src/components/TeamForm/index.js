@@ -3,11 +3,14 @@ import AUTH_SERVICE from '../../services/AuthService';
 import TEAM_SERVICE from '../../services/TeamService';
 
 export default class TeamForm extends Component {
-    state = {
-        name: '',
-        owner: this.props.currentUser._id,
-        members: [],
-        usersList: null
+    constructor(props) {
+        super(props);
+        this.state = {
+            name: '',
+            owner: this.props.currentUser._id,
+            members: [],
+            usersList: null
+        }
     }
 
     componentDidMount = () => {

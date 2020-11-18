@@ -24,7 +24,7 @@ const PROJECT_SERVICE = {
     return service.post(`/api/projects/${projectId}/delete`);
   },
   updateProject(projectId, projectData) {
-    return service.post(`/api/projects/${projectId}/update`, {projectData});
+    return service.post(`/api/projects/${projectId}/update`, projectData);
   }
 };
 

@@ -5,14 +5,17 @@ import TEAM_SERVICE from '../../services/TeamService';
 
 
 export default class TaskDetails extends Component {
-    state = {
-        title: '',
-        description: '',
-        dueDate: '',
-        assigned: '',
-        checklist: [],
-        isComplete: false,
-        teamMembers: null
+    constructor(props) {
+        super(props);
+        this.state = {
+            title: '',
+            description: '',
+            dueDate: '',
+            assigned: '',
+            checklist: [],
+            isComplete: false,
+            teamMembers: null
+        }
     }
 
     componentDidMount = () => {
@@ -118,21 +121,14 @@ export default class TaskDetails extends Component {
         return (
             <div className='modal'>
                 <div className='modal-content' onSubmit={this.handleFormSubmit}>
-                    <div>
-                        <label>Title:
-                            <input 
-                                name='title' 
-                                type='text'
-                                placeholder='Task title'
-                                value={this.state.title}
-                                onChange={this.handleInputChange}/>
-                            </label>
-                        <label>
-                            <input type='checkbox' defaultChecked={this.state.isComplete} />
-                            Complete
+                    <label>Title:
+                        <input 
+                            name='title' 
+                            type='text'
+                            placeholder='Task title'
+                            value={this.state.title}
+                            onChange={this.handleInputChange}/>
                         </label>
-                        
-                    </div>
                     <label htmlFor='description'>Description:</label>
                     <input 
                         name='description' 
@@ -170,6 +166,10 @@ export default class TaskDetails extends Component {
                             }
                         </ul>
                     </div>
+                    <label>
+                        <input type='checkbox' defaultChecked={this.state.isComplete} />
+                        Complete
+                    </label>
                     <input 
                         name='dueDate' 
                         type='date'

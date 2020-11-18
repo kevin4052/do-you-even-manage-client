@@ -6,8 +6,11 @@ import TaskDetails from '../TaskDetails.js';
 import TaskForm from '../TaskForm';
 
 export default class ProjectDetails extends Component {
-    state = {
-        project: null
+    constructor(props) {
+        super(props);
+        this.state = {
+            project: null
+        }
     }
 
     componentDidMount = () => {

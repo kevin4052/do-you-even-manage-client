@@ -3,8 +3,11 @@ import { Link } from 'react-router-dom';
 import Signup from '../Authentication/Signup';
 
 export default class Landing extends Component {
-    state = {
-        signup: false
+    constructor(props) {
+        super(props);
+        this.state = {
+            signup: false
+        }
     }
 
     updateUser = (user) => {

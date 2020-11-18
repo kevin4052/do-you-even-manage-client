@@ -3,13 +3,16 @@ import AUTH_SERVICE from '../../../services/AuthService';
 import './style.css';
 
 export default class Signup extends Component {
-    state = {
-        firstName: '',
-        lastName: '',
-        email: '',
-        password: '',
-        profileImg: null,
-        message: null
+    constructor(props) {
+        super(props);
+        this.state = {
+            firstName: '',
+            lastName: '',
+            email: '',
+            password: '',
+            profileImg: null,
+            message: null
+        }
     }
 
     handleInputChange = event => {

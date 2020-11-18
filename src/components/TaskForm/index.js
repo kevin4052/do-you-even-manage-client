@@ -3,14 +3,17 @@ import React, { Component } from 'react';
 import TASK_SERVICE from '../../services/TaskService';
 
 export default class TaskForm extends Component {
-    state = {
-        title: '',
-        description: '',
-        dueDate: '',
-        assigned: '',
-        checklist: [],
-        isComplete: false,
-        teamMembers: null
+    constructor(props) {
+        super(props);
+        this.state = {
+            title: '',
+            description: '',
+            dueDate: '',
+            assigned: '',
+            checklist: [],
+            isComplete: false,
+            teamMembers: null
+        }
     }
 
     componentDidMount = () => {

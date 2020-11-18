@@ -1,8 +1,15 @@
 import React, { Component } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
+import TaskDetails from '../TaskDetails.js';
 
 export default class MyTaskTable extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            selectedTask: null
+        }
+    }
 
     convertDate = (date) => {
         const options = { year: 'numeric', month: 'long', day: 'numeric' };
@@ -23,10 +30,6 @@ export default class MyTaskTable extends Component {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td><FontAwesomeIcon icon={faPlusCircle} /></td>
-                            <td colSpan="4" >Add a task</td>
-                        </tr>
                         {
                             this.props.userTasks?.map(task =>
                                 <tr key={`userTask${task._id}`}>
@@ -38,6 +41,10 @@ export default class MyTaskTable extends Component {
                                 </tr>
                             )
                         }
+                        <tr>
+                            <td><FontAwesomeIcon icon={faPlusCircle} /></td>
+                            <td colSpan="4" >Add a task</td>
+                        </tr>
                         <tr></tr>
                     </tbody>
                 </table>

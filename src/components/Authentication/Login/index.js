@@ -2,10 +2,13 @@ import React, { Component } from 'react';
 import AUTH_SERVICE from '../../../services/AuthService';
 
 export default class Login extends Component {
-    state = {
-        email: '',
-        password: '',
-        message: null
+    constructor(props) {
+        super(props);
+        this.state = {
+            email: '',
+            password: '',
+            message: null
+        }
     }
 
     handleInputChange = event => {

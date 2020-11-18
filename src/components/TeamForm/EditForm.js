@@ -3,12 +3,15 @@ import AUTH_SERVICE from '../../services/AuthService';
 import TEAM_SERVICE from '../../services/TeamService';
 
 export default class EditForm extends Component {
-    state = {
-        teamId: '',
-        name: '',
-        members: null,
-        projects: null,
-        usersList: null
+    constructor(props) {
+        super(props);
+        this.state = {
+            teamId: '',
+            name: '',
+            members: null,
+            projects: null,
+            usersList: null
+        }
     }
 
     componentDidMount = () => {

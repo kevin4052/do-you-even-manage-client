@@ -22,6 +22,9 @@ const AUTH_SERVICE = {
   },
   getAllUsers() {
     return service.get('/api/get-users')
+  },
+  updateCurrentUser(userData) {
+    return service.post(`/api/update-user`, userData)
   }
 };
 

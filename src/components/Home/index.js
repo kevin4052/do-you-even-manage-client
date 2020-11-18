@@ -6,10 +6,13 @@ import AUTH_SERVICE from '../../services/AuthService';
 // import TASK_SERVICE from '../../services/TaskService';
 
 export default class Home extends Component {
-    state = {
-        userTeams: [],
-        userProjects: [],
-        userTasks: []
+    constructor(props) {
+        super(props);
+        this.state = {
+            userTeams: [],
+            userProjects: [],
+            userTasks: []
+        }
     }
 
     componentDidMount = async () => {

@@ -5,10 +5,13 @@ import TEAM_SERVICE from '../../services/TeamService';
 
 
 export default class ProjectForm extends Component {
-    state = {
-        name: '',
-        description: '',
-        team: null
+    constructor(props) {
+        super(props);
+        this.state = {
+            name: '',
+            description: '',
+            team: null
+        }
     }
 
     componentDidMount = () => {

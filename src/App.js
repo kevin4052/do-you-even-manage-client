@@ -2,16 +2,14 @@ import React, { Component } from 'react';
 import './App.scss';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
+import AUTH_SERVICE from './services/AuthService';
 import Home from './components/Home';
 import Signup from './components/Authentication/Signup';
 import ProtectedRoute from './components/ProtectedRoute';
 import Profile from './components/Profile';
 import Login from './components/Authentication/Login';
-
-import AUTH_SERVICE from './services/AuthService';
 import Landing from './components/LandingPage';
 import SideNav from './components/SideNav';
-// import Navbar from './components/Navbar';
 import ProjectDetails from './components/ProjectDetails';
 import MyTasks from './components/MyTasks';
 import TeamDetails from './components/TeamDetails';

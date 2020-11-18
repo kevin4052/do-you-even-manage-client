@@ -7,8 +7,11 @@ import EditForm from '../TeamForm/EditForm';
 import TeamProjects from './TeamProjects';
 
 export default class TeamDetails extends Component {
-    state = {
-        team: null
+    constructor(props) {
+        super(props);
+        this.state = {
+            team: null
+        }
     }
 
     componentDidMount = () => {
@@ -106,6 +109,7 @@ export default class TeamDetails extends Component {
                     <TeamProjects 
                         updateUserTeams={this.updateUserTeams}
                         showProjectModal={this.showProjectModal}
+                        team={this.state.team}
                         projects={this.state.team.projects}/>
                     <ProjectForm 
                         updateUserTeams={this.updateUserTeams} 

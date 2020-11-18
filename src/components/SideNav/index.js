@@ -15,6 +15,10 @@ import TASK_SERVICE from '../../services/TaskService';
 import TeamForm from '../TeamForm';
 
 export default class SideNav extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {}
+    }
 
     componentDidMount = () => {
         Promise.all([
