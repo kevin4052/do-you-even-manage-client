@@ -1,8 +1,6 @@
 import React from 'react'
 
-export default function MemberCard({member}) {
-    const { firstName, lastName, profileImg } = member;
-    // console.log({firstName});
+export default function MemberCard({ members }) {
 
     return (
         <div className='member-card'>
@@ -10,8 +8,14 @@ export default function MemberCard({member}) {
                 <h5>Team Members</h5>
             </div>
             <div className="member-card-body">
-                <img src={profileImg} alt=''/>
-                <h4>{firstName} {lastName}</h4>
+                {
+                    members?.map(member => 
+                        <div>
+                            <img src={member.profileImg} alt=''/>
+                            <h4>{member.firstName} {member.lastName}</h4>
+                        </div>)
+                }
+                
             </div>            
         </div>
     )
