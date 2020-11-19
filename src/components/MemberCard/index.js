@@ -10,7 +10,7 @@ export default function MemberCard({ members }) {
             <div className="member-card-body">
                 {
                     members?.map(member => 
-                        <div>
+                        <div key={`team-member${member._id}`}>
                             <img src={member.profileImg} alt=''/>
                             <h4>{member.firstName} {member.lastName}</h4>
                         </div>)

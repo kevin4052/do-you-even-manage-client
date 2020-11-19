@@ -27,7 +27,9 @@ export default class Landing extends Component {
                 <div className='landing-content'>
                     <div className='landing-nav'>
                         <div>
-                            <p><b>do you even manage</b></p>
+                            <Link to='/'>
+                                <p><b>do you even manage</b></p>
+                            </Link>
                         </div>
                         <div className='landing-nav-auth'>
                             <Link to='/login'>

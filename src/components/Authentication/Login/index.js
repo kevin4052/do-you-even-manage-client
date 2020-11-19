@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import AUTH_SERVICE from '../../../services/AuthService';
+import { Link } from 'react-router-dom';
 
 export default class Login extends Component {
     constructor(props) {
@@ -39,29 +40,40 @@ export default class Login extends Component {
 
     render() {
         return (
-            <section className='center-content modal display'>
-                <form className='form' onSubmit={this.handleFormSubmission}>
-                    <h3>Login</h3>
-                    <input
-                        name='email'
-                        type='email'
-                        placeholder='Email address'
-                        value={this.state.email}
-                        onChange={this.handleInputChange}
-                    />
-                    <br/>
-                    <input
-                        name='password'
-                        type='password'
-                        placeholder='Password'
-                        value={this.state.password}
-                        onChange={this.handleInputChange}
-                    />
-                    <br/>
-                    <button> Login </button>
-                </form>
-                {this.state.message && <div> {this.state.message} </div>}
-            </section>
+            <div className='landing'>
+                <div className='landing-content'>
+                    <div className='landing-nav'>
+                        <div>
+                            <Link to='/'>
+                                <p><b>do you even manage</b></p>
+                            </Link>
+                        </div>                       
+                    </div>
+                    <section className='center-content modal display'>
+                        <form className='form' onSubmit={this.handleFormSubmission}>
+                            <h3>Login</h3>
+                            <input
+                                name='email'
+                                type='email'
+                                placeholder='Email address'
+                                value={this.state.email}
+                                onChange={this.handleInputChange}
+                            />
+                            <br/>
+                            <input
+                                name='password'
+                                type='password'
+                                placeholder='Password'
+                                value={this.state.password}
+                                onChange={this.handleInputChange}
+                            />
+                            <br/>
+                            <button> Login </button>
+                        </form>
+                        {this.state.message && <div> {this.state.message} </div>}
+                    </section>
+                </div>
+            </div>
         )
     }
 }

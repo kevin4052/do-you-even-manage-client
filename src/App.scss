@@ -84,6 +84,12 @@ body {
   right: 0px;
   padding: 10px 2rem;
   background-color: white;
+  z-index: 5;
+
+  a {
+    text-decoration: none;
+    color: black;
+  }
 
   &-auth {
     display: flex;
@@ -207,8 +213,6 @@ body {
   align-items: center;;
   border-bottom: 1px solid white;
   position: relative;
-  // margin: 1rem 0 0;
-  // padding-bottom: 1rem;
 
   .photo {
     margin: 0 2.5rem 0 0;
@@ -282,8 +286,6 @@ body {
       float: right;
       position: absolute;
       right: 9px;
-      // top: 50%;
-      // transform: translateY(-37%);
     }
 
   }
@@ -335,7 +337,6 @@ body {
       color: white;
       text-decoration: none;
       transition: all 0.3s ease-in-out;
-      // z-index: 5;
 
     }
     .collapse {
@@ -365,11 +366,11 @@ body {
 }
 
 .main-panel {
-  // position: fixed;
   top: 0;
   right: 0;
   bottom: 0;
   width: 100%;
+  padding: 1rem;
 }
 
 .flex-row {
@@ -454,7 +455,6 @@ td {
 .members {
   width: 330px;
   margin: 1rem;
-  // border: 1px solid black;
 }
 
 .member-card {
@@ -540,7 +540,6 @@ td {
         box-shadow: 1px 2px 11px -5px black;
 
         h5 {
-          // font-size: 1.0rem;
           font-weight: 1000;
         }
       }
@@ -551,7 +550,6 @@ td {
 
         .task-card {
           position: relative;
-          // width: 100%;
           margin: 0.5rem 0;
           padding: 1rem;
           border-radius: 12px;

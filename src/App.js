@@ -39,44 +39,39 @@ class App extends Component {
       .getAuthenticatedUser()
       .then(responseFromServer => {
         const { user } = responseFromServer.data;
-        console.log({user});
+        // console.log({user});
         this.setState({ currentUser: user });
       })
       .catch(err => {
-        console.log('auth error')
+        // console.log('auth error');
         this.setState({ currentUser: null });
       });
   }
 
   updateUser = (user) => {
-    // let userLoading = user === null;
-    console.log('app.js update user')
+    // console.log('app.js update user');
     this.setState({ 
       currentUser: user
     });
-
-    // this.getCurrentUser();
-
   }
 
   updateUserTeams = (teams) => {
-    this.setState({ userTeams: teams})
+    this.setState({ userTeams: teams })
   }
 
   updateCurrentProject = (project) => {
-    this.setState({ currentProject: project})
+    this.setState({ currentProject: project })
   }
 
   updateUserTasks = (tasks) => {
-    this.setState({ userTasks: tasks})
+    this.setState({ userTasks: tasks })
   }
 
   render() {
-    console.log({state: this.state.currentUser});
+    // console.log({ state: this.state.currentUser });
     return (
       <div className="App">
         <BrowserRouter>
-
           {
             this.state.currentUser &&
             <SideNav 
@@ -113,8 +108,12 @@ class App extends Component {
                 onUserChange={this.updateUser} />}
             />
 
-            <Route 
-              exact path={'/project/:projectId'}
+            {this.state.userLoading 
+            ?<div>Loading...</div>
+            :<ProtectedRoute
+              path='/project/:projectId'
+              authorized={this.state.currentUser}
+              redirect={'/login'}
               render={props => 
                 <ProjectDetails {...props} 
                   currentUser={this.state.currentUser} 
@@ -123,31 +122,38 @@ class App extends Component {
                   updateCurrentProject={this.updateCurrentProject}
                   currentProject={this.state.currentProject}
                   />}
-            />
-            
-            <Route 
-              exact path={'/my-tasks'}
+            />}
+
+            {this.state.userLoading 
+            ?<div>Loading...</div>
+            :<ProtectedRoute
+              path='/my-tasks'
+              authorized={this.state.currentUser}
+              redirect={'/login'}
               render={props => 
                 <MyTasks {...props} 
                   currentUser={this.state.currentUser} 
                   onUserChange={this.updateUser}
-                  />}
-            />
+                  />}/>
+            }
+            
+            {this.state.userLoading 
+            ?<div>Loading...</div>
+            :<ProtectedRoute
+              path='/team/:teamId'
+              authorized={this.state.currentUser}
+              redirect={'/login'}
+              render={props =>
+                    <TeamDetails {...props} 
+                      currentUser={this.state.currentUser}
+                      onUserChange={this.updateUser}
+                      updateUserTeams={this.updateUserTeams}
+                      />}/>
+            }
 
-            <Route 
-              exact path={'/team/:teamId'}
-              render={props => 
-                <TeamDetails {...props} 
-                  currentUser={this.state.currentUser}
-                  onUserChange={this.updateUser}
-                  updateUserTeams={this.updateUserTeams}
-                  />}
-            />
-
-            {this.state.userLoading ?
-            <div>Loading...</div>
-            :
-            <ProtectedRoute
+            {this.state.userLoading 
+            ?<div>Loading...</div>
+            :<ProtectedRoute
               path='/profile'
               authorized={this.state.currentUser}
               redirect={'/login'}
@@ -160,10 +166,9 @@ class App extends Component {
                 />}
             />}
 
-            {this.state.userLoading ?
-            <div>Loading...</div>
-            :
-            <ProtectedRoute
+            {this.state.userLoading 
+            ?<div>Loading...</div>
+            :<ProtectedRoute
               path='/home'
               authorized={this.state.currentUser}
               redirect={'/login'}
@@ -177,7 +182,6 @@ class App extends Component {
                 />}
             />}
           </Switch>
-
         </BrowserRouter>
       </div>
     );

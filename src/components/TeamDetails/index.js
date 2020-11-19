@@ -23,7 +23,6 @@ export default class TeamDetails extends Component {
             const { team } = responseFromServer[1].data;
             this.setState({ team });
             this.props.onUserChange(user);
-
             // console.log({ team })
         })
         .catch(err => console.log({ err }));
@@ -79,9 +78,9 @@ export default class TeamDetails extends Component {
     }
 
     render() {
-        console.log({state: this.state});
+        // console.log({state: this.state});
         return (
-            <div className='main-panel general-padding'>
+            <div className='main-panel'>
                 {
                     this.state.team 
                     ?
