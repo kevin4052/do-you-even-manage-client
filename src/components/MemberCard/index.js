@@ -14,8 +14,7 @@ export default function MemberCard({ members }) {
                             <img src={member.profileImg} alt=''/>
                             <h4>{member.firstName} {member.lastName}</h4>
                         </div>)
-                }
-                
+                }                
             </div>            
         </div>
     )

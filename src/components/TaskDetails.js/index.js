@@ -13,7 +13,7 @@ export default class TaskDetails extends Component {
             dueDate: '',
             assigned: '',
             checklist: [],
-            isComplete: false,
+            status: '',
             teamMembers: null
         }
     }
@@ -57,12 +57,14 @@ export default class TaskDetails extends Component {
     handleFormSubmit = (event) => {
         const modalClasslist = event.target.parentNode.parentNode.classList;
         const assignedID = event.target.parentNode.childNodes[3].childNodes[1].value;
+        const selectedStatus = event.target.parentNode.childNodes[5].childNodes[1].value
+
+        console.log({ selectedStatus })
         const { 
             title, 
             description,
             dueDate,
             checklist,
-            isComplete
          } = this.state;
 
         //  console.log(modalClasslist)
@@ -74,22 +76,23 @@ export default class TaskDetails extends Component {
             {   title, 
                 description, 
                 dueDate: new Date(dueDate), 
-                assigned: assignedID, 
+                assigned: assignedID || this.state.assigned._id, 
                 checklist, 
-                isComplete 
+                status: selectedStatus
             })
         .then(responseFromServer => {
             const { task } = responseFromServer.data;
-            console.log({ task });
+            // console.log({ task });
             modalClasslist.remove('display');
+            this.props.updateProject();
 
-            TEAM_SERVICE
-            .getUserTeams()
-            .then(responseFromServer => {
-                const { teams } = responseFromServer.data;
-                this.props.updateUserTeams(teams)
-            })
-            .catch(err => console.log({ err }));
+            // TEAM_SERVICE
+            // .getUserTeams()
+            // .then(responseFromServer => {
+            //     const { teams } = responseFromServer.data;
+            //     this.props.updateUserTeams(teams)
+            // })
+            // .catch(err => console.log({ err }));
         })
         .catch(err => console.log({ err }));
     }
@@ -145,7 +148,9 @@ export default class TaskDetails extends Component {
                                 <option key={`task${member._id}`} value={member._id} >{member.firstName} {member.lastName}</option>)
                             }
                         </select>
-                        <div>{this.state.assigned.firstName}</div>
+                        <br/>
+                        <br/>
+                        <div>Currently assigned: {this.state.assigned.firstName}</div>
                     </div>
                     <div className='checklist'>
                         <label></label>
@@ -166,10 +171,14 @@ export default class TaskDetails extends Component {
                             }
                         </ul>
                     </div>
-                    <label>
-                        <input type='checkbox' defaultChecked={this.state.isComplete} />
-                        Complete
-                    </label>
+                    <div>
+                        <label htmlFor="status">Task status: </label>
+                        <select name="status" id="status">
+                            <option value='todo'>not started</option>
+                            <option value='inProgress'>In progress</option>
+                            <option value='complete'>completed</option>
+                        </select>
+                    </div>
                     <input 
                         name='dueDate' 
                         type='date'

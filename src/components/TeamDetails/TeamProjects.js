@@ -6,7 +6,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 import { faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 import { faEye } from '@fortawesome/free-solid-svg-icons';
-import { faEdit } from '@fortawesome/free-solid-svg-icons';
 
 export default class TeamProjects extends Component {
     constructor(props) {
@@ -86,11 +85,10 @@ export default class TeamProjects extends Component {
                                 <td>{project.name}</td>
                                 <td>{project.description}</td>
                                 <td>
-                                    <FontAwesomeIcon icon={faEdit} />
                                     <span> </span>
                                     <Link to={`/project/${project._id}`}><FontAwesomeIcon icon={faEye} /></Link>
                                     <span> </span>
-                                    <FontAwesomeIcon icon={faTimesCircle} onClick={() => this.deleteProject(project._id)} />
+                                    <FontAwesomeIcon className='delete-btn' icon={faTimesCircle} onClick={() => this.deleteProject(project._id)} />
                                 </td>
                             </tr>
                             )

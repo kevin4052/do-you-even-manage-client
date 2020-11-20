@@ -2,15 +2,18 @@ import React, { Component } from 'react';
 import AUTH_SERVICE from '../../services/AuthService';
 import TEAM_SERVICE from '../../services/TeamService';
 import MemberCard from '../MemberCard';
-import ProjectForm from '../ProjectForm';
 import EditForm from '../TeamForm/EditForm';
 import TeamProjects from './TeamProjects';
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTimesCircle } from '@fortawesome/free-solid-svg-icons';
+import { faEdit } from '@fortawesome/free-solid-svg-icons';
 
 export default class TeamDetails extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            team: null
+            team: null,
         }
     }
 
@@ -39,22 +42,12 @@ export default class TeamDetails extends Component {
         this.componentDidMount();
     }
 
-    showProjectModal = (event) => {
-        const nodeList = event.target.parentNode.parentNode.childNodes;
-        const modalClassList = [...nodeList].filter(node => node.classList.contains('modal'))[0].classList;
-        // console.log({ modalClassList });
-        modalClassList.contains('display')
-        ? modalClassList.remove('display')
-        : modalClassList.add('display')
-    }
-
     showTeamEditForm = (event) => {
-        console.log({ edit: event.target.parentNode.childNodes[5] })
-        const modalClassList = event.target.parentNode.childNodes[5].classList;
+        // console.log(event.target.parentNode.parentNode.parentNode.childNodes)
+        const modalClassList = event.target.parentNode.parentNode.parentNode.childNodes[2].classList;
         modalClassList.contains('display')
         ? modalClassList.remove('display')
-        : modalClassList.add('display')
-
+        : modalClassList.add('display');
     }
 
     deleteTeam = () => {
@@ -83,38 +76,33 @@ export default class TeamDetails extends Component {
             <div className='main-panel'>
                 {
                     this.state.team 
-                    ?
-                    <div>
+                    ?<div className='team-title'>
                         <h1>{this.state.team?.name}</h1>
-                        <div className='members'>
-                            <MemberCard members={this.state.team.members}/>
-                            
+                        <div className='team-title-btn'>
+                            <FontAwesomeIcon icon={faEdit} onClick={this.showTeamEditForm} />
+                            <FontAwesomeIcon icon={faTimesCircle} onClick={this.deleteTeam} />
+                            {/* <button >Edit Team</button>
+                            <button onClick={this.deleteTeam}>Delete Team</button> */}
                         </div>
-                    </div>
-                    :
-                    <p>Loading...</p>
+                    </div>                    
+                    :<p>Loading...</p>                    
                 }
-                <button onClick={this.showTeamEditForm}>Edit Team</button>
-                <button onClick={this.deleteTeam}>Delete Team</button>
-
-                {this.state.team && (
-                    <>
-                    <TeamProjects 
-                        updateUserTeams={this.updateUserTeams}
-                        showProjectModal={this.showProjectModal}
-                        team={this.state.team}
-                        projects={this.state.team.projects}/>
-                    <ProjectForm 
-                        updateUserTeams={this.updateUserTeams} 
-                        teamId={this.state.team._id}/>
+                <div className='team-content'>
+                    <MemberCard members={this.state.team?.members}/>  
+                    {this.state.team && 
+                        <TeamProjects 
+                            updateUserTeams={this.updateUserTeams}
+                            team={this.state.team}
+                            projects={this.state.team.projects}/>
+                    }
+                </div>
+                {this.state.team &&
                     <EditForm 
-                        team={this.state.team}
-                        currentUser={this.props.currentUser}
-                        updateUserTeams={this.updateUserTeams}
-                        updateTeamDetails={this.updateTeamDetails}
-                    />
-                    </>
-                    )}
+                            team={this.state.team}
+                            currentUser={this.props?.currentUser}
+                            updateUserTeams={this.updateUserTeams}
+                            updateTeamDetails={this.updateTeamDetails}/>
+                }
             </div>
         )
     }

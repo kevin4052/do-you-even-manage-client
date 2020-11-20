@@ -4,12 +4,18 @@ import PROJECT_SERVICE from '../../services/ProjectService';
 import TaskDetails from '../TaskDetails.js';
 // import TASK_SERVICE from '../../services/TaskService';
 import TaskForm from '../TaskForm';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTimesCircle } from '@fortawesome/free-solid-svg-icons';
+import TASK_SERVICE from '../../services/TaskService';
 
 export default class ProjectDetails extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            project: null
+            project: null,
+            completedTasks: null,
+            toDoTasks: null,
+            inProgressTasks: null
         }
     }
 
@@ -19,23 +25,32 @@ export default class ProjectDetails extends Component {
 
         Promise
             .all([AUTH_SERVICE.getAuthenticatedUser(), PROJECT_SERVICE.getOneProject(projectId)])
-            .then(async responseFromServer => {
+            .then(responseFromServer => {
                 const { user } = responseFromServer[0].data;
                 const { project } = responseFromServer[1].data;
 
                 // console.log({ project });
+                const toDoTasks = project.tasks.filter(task => task.status === 'todo');
+                const inProgressTasks = project.tasks.filter(task => task.status === 'inProgress');
+                const completedTasks = project.tasks.filter(task => task.status === 'complete');
 
                 this.props.onUserChange(user);
-                // this.props.updateCurrentProject(project);
-                await this.setState({ project });
+                this.setState({ 
+                    project,
+                    toDoTasks,
+                    inProgressTasks,
+                    completedTasks
+                 });
             })
             .catch(err => console.log({ err }));
     }
 
     addNewTask = (task) => {
-        const { project } = this.state;
-        project.tasks.push(task);
-        this.setState({ project });
+        // console.log('new task')
+        // const { project } = this.state;
+        // project.tasks.push(task);
+        // this.setState({ project });
+        this.componentDidMount();
     }
 
     displayTaskForm = (event) => {
@@ -64,6 +79,22 @@ export default class ProjectDetails extends Component {
         this.componentDidMount();
     }
 
+    updateProject = () => {
+        this.componentDidMount();
+    }
+
+    deleteTask = (event) => {
+        const { tasks } = this.state.project;
+        const taskName = event.target.parentNode.parentNode.childNodes[1].innerText;
+        // console.log({ taskName });
+        const taskToDelete = tasks.filter(task => task.title === taskName)[0];
+
+        TASK_SERVICE
+        .deleteTask(taskToDelete._id)
+        .then(() => this.componentDidMount())
+        .catch(err => console.log({ err }));
+    }
+
     render() {
         // console.log(this.state?.project);
         return (
@@ -82,14 +113,18 @@ export default class ProjectDetails extends Component {
                                 <div className='col-body'>
                                     {/* list of items */}
                                     {
-                                        this.state.project?.tasks.map(task => 
+                                        this.state.toDoTasks?.map(task => 
                                         <div className='task-card' key={`todo${task._id}`} task={task._id}>
                                             <button onClick={this.displayTask}></button>
                                             <p>{task.title}</p>
                                             <TaskDetails 
                                                 currentProject={this.state.project} 
                                                 updateUserTeams={this.updateUserTeams} 
+                                                updateProject={this.updateProject}
                                                 task={task}/>
+                                            <div className='delete-btn'>
+                                                <FontAwesomeIcon icon={faTimesCircle} onClick={this.deleteTask} />
+                                            </div>
                                         </div>
                                         )
                                     }
@@ -102,14 +137,18 @@ export default class ProjectDetails extends Component {
                                 <div className='col-body'>
                                     {/* list of items */}
                                     {
-                                        this.state.project?.tasks.map(task => 
+                                        this.state.inProgressTasks?.map(task => 
                                         <div className='task-card' key={`progess${task._id}`} task={task._id}>
-                                            <button onClick={this.displayTask} ></button>
+                                            <button onClick={this.displayTask}></button>
                                             <p>{task.title}</p>
                                             <TaskDetails 
                                                 currentProject={this.state.project} 
                                                 updateUserTeams={this.updateUserTeams} 
+                                                updateProject={this.updateProject}
                                                 task={task}/>
+                                            <div className='delete-btn'>
+                                                <FontAwesomeIcon icon={faTimesCircle} onClick={this.deleteTask} />
+                                            </div>
                                         </div>
                                         )
                                     }
@@ -122,14 +161,18 @@ export default class ProjectDetails extends Component {
                                 <div className='col-body'>
                                     {/* list of items */}
                                     {
-                                        this.state.project?.tasks.map(task => 
+                                        this.state.completedTasks?.map(task => 
                                         <div className='task-card' key={`complete${task._id}`}>
                                             <button onClick={this.displayTask}></button>
                                             <p>{task.title}</p>
                                             <TaskDetails 
                                                 currentProject={this.state.project} 
                                                 updateUserTeams={this.updateUserTeams} 
+                                                updateProject={this.updateProject}
                                                 task={task}/>
+                                            <div className='delete-btn'>
+                                                <FontAwesomeIcon icon={faTimesCircle} onClick={this.deleteTask} />
+                                            </div>
                                         </div>
                                         )
                                     }

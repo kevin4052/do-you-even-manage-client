@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import AUTH_SERVICE from '../../services/AuthService';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEdit } from '@fortawesome/free-solid-svg-icons';
+import { faTimesCircle } from '@fortawesome/free-solid-svg-icons';
+
 export default class Profile extends Component {
     constructor(props) {
         super(props);
@@ -85,7 +89,9 @@ export default class Profile extends Component {
                                 <input name='email' value={this.state.email} onChange={this.handleChange}/>
                             </div>
                         </div>
-                        <button onClick={this.handleFormSubmit}>update</button>
+                        <div className='edit-profile'>
+                            <button onClick={this.handleFormSubmit}>update</button>
+                        </div>
                     </div>
                     :<div className='profile-card'>
                         <img src={profileImg} alt='user-img' />
@@ -95,8 +101,10 @@ export default class Profile extends Component {
                                 <p>{email}</p>
                             </div>
                         </div>
-                        <button onClick={() => this.editProfile()}>Edit</button>
-                        <button onClick={() => this.deleteUser()}>Delete</button>
+                        <div className='edit-profile'>
+                            <FontAwesomeIcon icon={faEdit} onClick={() => this.editProfile()} />
+                            <FontAwesomeIcon icon={faTimesCircle} onClick={() => this.deleteUser()} />
+                        </div>
                     </div>                
                 }
                 <div className='user-stats'>
@@ -115,6 +123,9 @@ export default class Profile extends Component {
                         <div className='modal-content delete-account'>
                             <h4>Are you sure you want to delete your account</h4>
                             <button onClick={this.confirmDeleteUser}>confirm</button>
+                            <div className='delete-account-cancel'>
+                                <FontAwesomeIcon icon={faTimesCircle} onClick={() => this.deleteUser()} />
+                            </div>
                         </div>
                     </div>
                 }

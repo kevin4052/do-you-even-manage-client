@@ -15,7 +15,7 @@ export default class EditForm extends Component {
     }
 
     componentDidMount = () => {
-        const { _id, name, members, projects } = this.props.team;
+        const { _id, name, members, projects } = this.props?.team;
         console.log({props: this.props});
         AUTH_SERVICE
             .getAllUsers()
@@ -127,7 +127,7 @@ export default class EditForm extends Component {
                     <div>
                         {
                             this.state.members?.map(member => 
-                                <div className='' key={`edit${member._id}`} member={member._id}>
+                                <div className='member-list' key={`edit${member._id}`} member={member._id}>
                                     <p>{member.firstName} {member.lastName}</p>
                                     <button onClick={this.removeMember}>X</button>
                                 </div>)
