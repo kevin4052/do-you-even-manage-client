@@ -108,7 +108,7 @@ class App extends Component {
                 onUserChange={this.updateUser} />}
             />
 
-            {this.state.userLoading 
+            {!this.state.currentUser 
             ?<div>Loading...</div>
             :<ProtectedRoute
               path='/project/:projectId'
@@ -124,7 +124,7 @@ class App extends Component {
                   />}
             />}
 
-            {this.state.userLoading 
+            {!this.state.currentUser 
             ?<div>Loading...</div>
             :<ProtectedRoute
               path='/my-tasks'
@@ -137,7 +137,7 @@ class App extends Component {
                   />}/>
             }
             
-            {this.state.userLoading 
+            {!this.state.currentUser 
             ?<div>Loading...</div>
             :<ProtectedRoute
               path='/team/:teamId'
@@ -151,7 +151,7 @@ class App extends Component {
                       />}/>
             }
 
-            {this.state.userLoading 
+            {!this.state.currentUser 
             ?<div>Loading...</div>
             :<ProtectedRoute
               path='/profile'
@@ -166,7 +166,7 @@ class App extends Component {
                 />}
             />}
 
-            {this.state.userLoading 
+            {!this.state.currentUser 
             ?<div>Loading...</div>
             :<ProtectedRoute
               path='/home'

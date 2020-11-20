@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 // import AUTH_SERVICE from '../../services/AuthService';
 import TASK_SERVICE from '../../services/TaskService';
-import TEAM_SERVICE from '../../services/TeamService';
+// import TEAM_SERVICE from '../../services/TeamService';
 
 
 export default class TaskDetails extends Component {
