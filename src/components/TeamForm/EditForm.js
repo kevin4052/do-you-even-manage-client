@@ -37,7 +37,6 @@ export default class EditForm extends Component {
         if (this.props.team._id !== this.state.teamId) {
             this.componentDidMount();
         }
-
     }
 
     handleInputChange = event => {
@@ -55,7 +54,7 @@ export default class EditForm extends Component {
         console.log({ modalClasslist })
 
         TEAM_SERVICE
-            .updateTeam(this.state.teamId, { 
+            .updateTeam(this.props.team._id, { 
                 name, 
                 members: memberIDs.length === 0 ? this.props.currentUser._id : memberIDs, 
                 projects: projectIDs 
@@ -69,7 +68,7 @@ export default class EditForm extends Component {
                     .then(responseFromServer => {
                         const { teams } = responseFromServer.data;
                         this.props.updateUserTeams(teams);
-                        modalClasslist.remove('display');
+                        this.props.TeamEditForm();
                     })
                     .catch(err => console.log({ err }));
             })
@@ -95,16 +94,13 @@ export default class EditForm extends Component {
     }
 
     cancelForm = (event) => {
-        const modalClasslist = event.target.parentNode.parentNode.classList;
-        const selector = event.target.parentNode.childNodes[1];
-        modalClasslist.remove('display');
-        selector.selectedIndex = 0;
+        this.props.TeamEditForm();
     }
 
     render() {
         console.log({editState: this.state});
         return (
-            <div className='modal'>
+            <div className='modal display'>
                 <div className='modal-content'>
                     <input 
                         name='name' 
@@ -122,7 +118,7 @@ export default class EditForm extends Component {
                                 <option key={`member${user._id}`} value={user._id} >{user.firstName} {user.lastName}</option>)
                             }
                         </select>
-                        <button onClick={(user) => this.addMember(user)}>add</button>
+                        <button onClick={(user) => this.addMember(user)}>add</button><br/>
                     </div>
                     <div>
                         {
@@ -135,6 +131,7 @@ export default class EditForm extends Component {
                     </div>
                     
                     <button onClick={this.cancelForm}> Cancel </button>
+                    <br/>
                     <button onClick={this.handleFormSubmit}> Edit Team </button>
                 </div>
             </div>

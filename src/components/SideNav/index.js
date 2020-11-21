@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
@@ -41,7 +41,7 @@ export default class SideNav extends Component {
         AUTH_SERVICE
             .logout()
             .then(() => {
-                this.props.history.push('/')
+                // this.props.history.push('/');
                 this.props.onUserChange(null);
             })
             .catch(err => console.log({ err }));
@@ -93,9 +93,9 @@ export default class SideNav extends Component {
                             </div>
                             <ul className='collapse'>
                                 <li>
-                                    <Link to={`/profile`}>
+                                    <NavLink exact activeClassName='current-nav' to={`/profile`}>
                                         <button className='onClickBtn'></button>
-                                    </Link>
+                                    </NavLink>
                                     <div className='user-options'>
                                         <FontAwesomeIcon icon={faUser} />
                                         <div>PROFILE</div>
@@ -135,9 +135,9 @@ export default class SideNav extends Component {
                                 {
                                     this.props.userTeams?.map(team =>                                    
                                         <li key={team._id} className='teams'>
-                                            <Link to={`/team/${team._id}`}>
+                                            <NavLink exact activeClassName='current-nav' to={`/team/${team._id}`}>
                                                 <button className='onClickBtn'></button>
-                                            </Link>                                            
+                                            </NavLink>                                            
                                             <div className='teams-info'>
                                                 <FontAwesomeIcon icon={faTh} />
                                                 <div>{team.name}</div>
@@ -148,7 +148,9 @@ export default class SideNav extends Component {
                             </ul>
                         </li>
                         <li className=''>
-                            <Link to='/my-tasks'><button className='onClickBtn'></button></Link>
+                            <NavLink exact activeClassName='current-nav' to='/my-tasks'>
+                                <button className='onClickBtn'></button>
+                            </NavLink>
                             <div className='list-info' >
                                 <div className='icon'>
                                     <FontAwesomeIcon icon={faTasks} />

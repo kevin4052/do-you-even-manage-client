@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
-// import TaskDetails from '../TaskDetails.js';
+import { faSortDown } from '@fortawesome/free-solid-svg-icons';
+import { faSortUp } from '@fortawesome/free-solid-svg-icons';
 
 export default class MyTaskTable extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            selectedTask: null
+            selectedTask: null,
+            sortedTasks: null,
+            newTask: false
         }
     }
 
@@ -16,35 +18,54 @@ export default class MyTaskTable extends Component {
         return new Date(date).toLocaleDateString([],options);
     }
 
+    toggleForm = () => {
+        const { newTask } = this.state;
+        this.setState({ newTask: !newTask });
+    }
+
+    sortByDate = () => {
+        this.props.sortByDate();
+    }
+
     render() {
+        const { ascendingDate } = this.props;
         return (
-            <div>
-                <table className='task-table'>
+            <div className='my-tasks'>
+                <table className='my-tasks-table'>
                     <thead>
                         <tr>
-                            <th></th>
-                            <th>Task Title</th>
-                            <th>Project</th>
-                            <th>Team</th>
-                            <th>Due</th>
+                            <th>
+                                <p>Task Title</p>
+                            </th>
+                            <th>
+                                <p>Project</p>
+                            </th>
+                            <th>
+                                <p>Team</p>
+                            </th>
+                            <th>
+                                <div className='table-head'>
+                                    <p onClick={this.sortByDate}>Due</p>
+                                    {
+                                        ascendingDate
+                                        ?<FontAwesomeIcon icon={faSortUp} />
+                                        :<FontAwesomeIcon icon={faSortDown} />
+                                    }                                    
+                                </div>
+                            </th>
                         </tr>
                     </thead>
                     <tbody>
                         {
                             this.props.userTasks?.map(task =>
                                 <tr key={`userTask${task._id}`}>
-                                    <td>X</td>
                                     <td>{task.title}</td>
                                     <td>{task.project?.name}</td>
                                     <td>{task.project?.team.name}</td>
                                     <td>{this.convertDate(task.dueDate)}</td>
                                 </tr>
                             )
-                        }
-                        <tr>
-                            <td><FontAwesomeIcon icon={faPlusCircle} /></td>
-                            <td colSpan="4" >Add a task</td>
-                        </tr>
+                        }                        
                         <tr></tr>
                     </tbody>
                 </table>

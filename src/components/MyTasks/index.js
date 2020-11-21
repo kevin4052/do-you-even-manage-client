@@ -7,31 +7,51 @@ export default class MyTasks extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            tasks: null
+            tasks: null,
+            sortedTasks: null,
+            ascendingDate: false
         }
     }
 
     componentDidMount = () => {
         Promise
             .all([AUTH_SERVICE.getAuthenticatedUser(), TASK_SERVICE.getAllUserTasks()])
-            .then(async responseFromServer => {
+            .then(responseFromServer => {
                 const { user } = responseFromServer[0].data;
                 const { tasks } = responseFromServer[1].data;
-
-                console.log({ tasks })
-
+                // console.log({ tasks });
                 this.props.onUserChange(user);
-                await this.setState({ tasks });
+                tasks.forEach(task => { task.dueDate = new Date(task.dueDate) });
+                tasks.sort((a, b) => a.dueDate - b.dueDate);
+                this.setState({ 
+                    tasks, 
+                    sortedTasks: tasks 
+                });
             })
             .catch(err => console.log({ err }));
     }
 
+    sortByDate = () => {
+        const { tasks, ascendingDate } = this.state;
+
+        ascendingDate
+        ? tasks.sort((a, b) => a.dueDate - b.dueDate)
+        : tasks.sort((a, b) => b.dueDate - a.dueDate)
+        
+        // console.log('sorted tasks', tasks);
+        this.setState({ 
+            sortedTasks: tasks,
+            ascendingDate: !ascendingDate
+        })
+    }
+
     render() {
         return (
-            <div className='flex-row'>
-                <div className='main-panel'>
-                    <MyTaskTable userTasks={this.state.tasks}/>
-                </div>
+            <div className='main-panel'>
+                <MyTaskTable 
+                    userTasks={this.state.sortedTasks} 
+                    ascendingDate={this.state.ascendingDate} 
+                    sortByDate={this.sortByDate}/>
             </div>
         )
     }

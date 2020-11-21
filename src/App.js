@@ -13,6 +13,7 @@ import SideNav from './components/SideNav';
 import ProjectDetails from './components/ProjectDetails';
 import MyTasks from './components/MyTasks';
 import TeamDetails from './components/TeamDetails';
+import Loading from './components/Loading'
 
 
 class App extends Component {
@@ -26,7 +27,7 @@ class App extends Component {
       currentTeamProjects: null,
       currentProject: null,
       currentProjectTasks: null,
-      userLoading: false,
+      loading: true,
     }
   }
 
@@ -40,7 +41,7 @@ class App extends Component {
       .then(responseFromServer => {
         const { user } = responseFromServer.data;
         // console.log({user});
-        this.setState({ currentUser: user });
+        this.setState({ currentUser: user, loading: false });
       })
       .catch(err => {
         // console.log('auth error');
@@ -48,11 +49,8 @@ class App extends Component {
       });
   }
 
-  updateUser = (user) => {
-    // console.log('app.js update user');
-    this.setState({ 
-      currentUser: user
-    });
+  updateUser = (user) => {    
+    this.setState({ currentUser: user });    
   }
 
   updateUserTeams = (teams) => {
@@ -68,49 +66,55 @@ class App extends Component {
   }
 
   render() {
-    // console.log({ state: this.state.currentUser });
     return (
       <div className="App">
+
         <BrowserRouter>
           {
             this.state.currentUser &&
             <SideNav 
-                    currentUser={this.state.currentUser}
-                    userTeams={this.state.userTeams}
-                    userProjects={this.state.userProjects}
-                    userTasks={this.state.userTasks}
-                    onUserChange={this.updateUser}
-                    updateUserTeams={this.updateUserTeams}
-                    updateUserTasks={this.updateUserTasks}
-                    />
+              currentUser={this.state.currentUser}
+              userTeams={this.state.userTeams}
+              userProjects={this.state.userProjects}
+              userTasks={this.state.userTasks}
+              onUserChange={this.updateUser}
+              updateUserTeams={this.updateUserTeams}
+              updateUserTasks={this.updateUserTasks}
+              />
           }
 
           <Switch>
-            <Route 
-              exact path='/' 
-              render={props => 
-              <Landing {...props} 
-                currentUser={this.state.currentUser} 
-                onUserChange={this.updateUser}/>} 
-            />
-            <Route 
-              exact path='/signup' 
-              render={props => 
-              <Signup {...props} 
-                currentUser={this.state.currentUser} 
-                onUserChange={this.updateUser} />}
-            />
-            <Route 
-              exact path='/login' 
-              render={props => 
-              <Login {...props} 
-                currentUser={this.state.currentUser} 
-                onUserChange={this.updateUser} />}
-            />
+            {
+              this.state.loading &&
+              (
+                <Route path='/' render={() =><Loading />} />
+              )
+            }
+              <Route 
+                exact path='/' 
+                render={props => 
+                <Landing {...props} 
+                  currentUser={this.state.currentUser} 
+                  onUserChange={this.updateUser}/>} 
+              />
 
-            {!this.state.currentUser 
-            ?<div>Loading...</div>
-            :<ProtectedRoute
+              <Route 
+                exact path='/signup' 
+                render={props => 
+                <Signup {...props} 
+                  currentUser={this.state.currentUser} 
+                  onUserChange={this.updateUser} />}
+              />
+
+              <Route 
+                exact path='/login' 
+                render={props => 
+                <Login {...props} 
+                  currentUser={this.state.currentUser} 
+                  onUserChange={this.updateUser} />}
+              />
+            
+            <ProtectedRoute
               path='/project/:projectId'
               authorized={this.state.currentUser}
               redirect={'/login'}
@@ -121,12 +125,9 @@ class App extends Component {
                   updateUserTeams={this.updateUserTeams}
                   updateCurrentProject={this.updateCurrentProject}
                   currentProject={this.state.currentProject}
-                  />}
-            />}
+                  />}/>
 
-            {!this.state.currentUser 
-            ?<div>Loading...</div>
-            :<ProtectedRoute
+            <ProtectedRoute
               path='/my-tasks'
               authorized={this.state.currentUser}
               redirect={'/login'}
@@ -135,11 +136,8 @@ class App extends Component {
                   currentUser={this.state.currentUser} 
                   onUserChange={this.updateUser}
                   />}/>
-            }
-            
-            {!this.state.currentUser 
-            ?<div>Loading...</div>
-            :<ProtectedRoute
+
+            <ProtectedRoute
               path='/team/:teamId'
               authorized={this.state.currentUser}
               redirect={'/login'}
@@ -149,11 +147,8 @@ class App extends Component {
                       onUserChange={this.updateUser}
                       updateUserTeams={this.updateUserTeams}
                       />}/>
-            }
 
-            {!this.state.currentUser 
-            ?<div>Loading...</div>
-            :<ProtectedRoute
+            <ProtectedRoute
               path='/profile'
               authorized={this.state.currentUser}
               redirect={'/login'}
@@ -163,12 +158,9 @@ class App extends Component {
                   onUserChange={this.updateUser} 
                   updateCurrentTeam={this.updateCurrentTeam}
                   userTeams={this.state.userTeams}
-                />}
-            />}
+                />}/>
 
-            {!this.state.currentUser 
-            ?<div>Loading...</div>
-            :<ProtectedRoute
+            <ProtectedRoute
               path='/home'
               authorized={this.state.currentUser}
               redirect={'/login'}
@@ -179,8 +171,7 @@ class App extends Component {
                   currentTeam={this.state.currentTeam}
                   currentProject={this.state.currentProject}
                   updateUserTeams={this.updateUserTeams}
-                />}
-            />}
+                />}/>
           </Switch>
         </BrowserRouter>
       </div>

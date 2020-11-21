@@ -27,12 +27,9 @@ export default class Home extends Component {
 
     render() {
         return (
-            <div className='flex-row'>
-                <div className='main-panel'>
-                    <div>
-                       <h2>Home page</h2>
-                        <h4>Welcome {this.props.currentUser?.firstName} {this.props.currentUser.lastName[0].toUpperCase()}</h4>
-                    </div>
+            <div className='main-panel'>
+                <div>
+                    <h4>Welcome {this.props.currentUser?.firstName} {this.props.currentUser.lastName[0].toUpperCase()}</h4>
                 </div>
             </div>
         )

@@ -14,6 +14,7 @@ export default class TeamDetails extends Component {
         super(props);
         this.state = {
             team: null,
+            editForm: false
         }
     }
 
@@ -42,12 +43,17 @@ export default class TeamDetails extends Component {
         this.componentDidMount();
     }
 
-    showTeamEditForm = (event) => {
-        // console.log(event.target.parentNode.parentNode.parentNode.childNodes)
-        const modalClassList = event.target.parentNode.parentNode.parentNode.childNodes[2].classList;
-        modalClassList.contains('display')
-        ? modalClassList.remove('display')
-        : modalClassList.add('display');
+    TeamEditForm = (event) => {
+        console.log('edit team form')
+        const { editForm } = this.state;
+        this.setState({ editForm: !editForm });
+        // // console.log(event.target.parentNode.parentNode.parentNode.childNodes)
+        // const modalClassList = event.target.parentNode.parentNode.parentNode.parentNode.childNodes[2].classList;
+
+        // console.log(modalClassList);
+        // modalClassList.contains('display')
+        // ? modalClassList.remove('display')
+        // : modalClassList.add('display');
     }
 
     deleteTeam = () => {
@@ -79,10 +85,8 @@ export default class TeamDetails extends Component {
                     ?<div className='team-title'>
                         <h1>{this.state.team?.name}</h1>
                         <div className='team-title-btn'>
-                            <FontAwesomeIcon icon={faEdit} onClick={this.showTeamEditForm} />
-                            <FontAwesomeIcon icon={faTimesCircle} onClick={this.deleteTeam} />
-                            {/* <button >Edit Team</button>
-                            <button onClick={this.deleteTeam}>Delete Team</button> */}
+                            <FontAwesomeIcon style={{background: 'white'}} icon={faEdit} onClick={() => this.TeamEditForm()} />
+                            <FontAwesomeIcon style={{background: 'white'}} icon={faTimesCircle} onClick={this.deleteTeam} />
                         </div>
                     </div>                    
                     :<p>Loading...</p>                    
@@ -96,12 +100,14 @@ export default class TeamDetails extends Component {
                             projects={this.state.team.projects}/>
                     }
                 </div>
-                {this.state.team &&
+                {this.state.editForm &&
                     <EditForm 
-                            team={this.state.team}
-                            currentUser={this.props?.currentUser}
-                            updateUserTeams={this.updateUserTeams}
-                            updateTeamDetails={this.updateTeamDetails}/>
+                        team={this.state.team}
+                        currentUser={this.props?.currentUser}
+                        updateUserTeams={this.updateUserTeams}
+                        updateTeamDetails={this.updateTeamDetails}
+                        TeamEditForm={this.TeamEditForm}
+                        />
                 }
             </div>
         )
