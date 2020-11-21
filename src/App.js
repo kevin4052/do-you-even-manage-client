@@ -13,8 +13,7 @@ import SideNav from './components/SideNav';
 import ProjectDetails from './components/ProjectDetails';
 import MyTasks from './components/MyTasks';
 import TeamDetails from './components/TeamDetails';
-import Loading from './components/Loading'
-
+import Loading from './components/Loading';
 
 class App extends Component {
   constructor(props) {
@@ -113,20 +112,20 @@ class App extends Component {
                   currentUser={this.state.currentUser} 
                   onUserChange={this.updateUser} />}
               />
-            
+
             <ProtectedRoute
-              path='/project/:projectId'
+              exact path='/home'
               authorized={this.state.currentUser}
               redirect={'/login'}
               render={props => 
-                <ProjectDetails {...props} 
-                  currentUser={this.state.currentUser} 
-                  onUserChange={this.updateUser}
-                  updateUserTeams={this.updateUserTeams}
-                  updateCurrentProject={this.updateCurrentProject}
+                <Home {...props} 
+                  currentUser={this.state.currentUser}
+                  onUserChange={this.updateUser} 
+                  currentTeam={this.state.currentTeam}
                   currentProject={this.state.currentProject}
-                  />}/>
-
+                  updateUserTeams={this.updateUserTeams}
+                />}/>
+            
             <ProtectedRoute
               path='/my-tasks'
               authorized={this.state.currentUser}
@@ -136,17 +135,6 @@ class App extends Component {
                   currentUser={this.state.currentUser} 
                   onUserChange={this.updateUser}
                   />}/>
-
-            <ProtectedRoute
-              path='/team/:teamId'
-              authorized={this.state.currentUser}
-              redirect={'/login'}
-              render={props =>
-                    <TeamDetails {...props} 
-                      currentUser={this.state.currentUser}
-                      onUserChange={this.updateUser}
-                      updateUserTeams={this.updateUserTeams}
-                      />}/>
 
             <ProtectedRoute
               path='/profile'
@@ -161,17 +149,29 @@ class App extends Component {
                 />}/>
 
             <ProtectedRoute
-              path='/home'
+              path='/project/:projectId'
               authorized={this.state.currentUser}
               redirect={'/login'}
               render={props => 
-                <Home {...props} 
-                  currentUser={this.state.currentUser}
-                  onUserChange={this.updateUser} 
-                  currentTeam={this.state.currentTeam}
-                  currentProject={this.state.currentProject}
+                <ProjectDetails {...props} 
+                  currentUser={this.state.currentUser} 
+                  onUserChange={this.updateUser}
                   updateUserTeams={this.updateUserTeams}
-                />}/>
+                  updateCurrentProject={this.updateCurrentProject}
+                  currentProject={this.state.currentProject}
+                  />}/>
+
+            <ProtectedRoute
+              path='/team/:teamId'
+              authorized={this.state.currentUser}
+              redirect={'/login'}
+              render={props =>
+                    <TeamDetails {...props} 
+                      currentUser={this.state.currentUser}
+                      onUserChange={this.updateUser}
+                      updateUserTeams={this.updateUserTeams}
+                      />}/>
+
           </Switch>
         </BrowserRouter>
       </div>

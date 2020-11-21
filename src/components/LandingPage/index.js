@@ -12,6 +12,7 @@ export default class Landing extends Component {
 
     updateUser = (user) => {
         this.props.onUserChange(user);
+        this.props.history.push('/home');
     }
 
     displayLoginModal = (event) => {}
