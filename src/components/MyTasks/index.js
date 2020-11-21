@@ -49,6 +49,7 @@ export default class MyTasks extends Component {
         return (
             <div className='main-panel'>
                 <MyTaskTable 
+                    parentProps={this.props}
                     userTasks={this.state.sortedTasks} 
                     ascendingDate={this.state.ascendingDate} 
                     sortByDate={this.sortByDate}/>

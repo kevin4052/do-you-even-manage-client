@@ -34,13 +34,14 @@ export default class ProjectDetails extends Component {
                 const inProgressTasks = project.tasks.filter(task => task.status === 'inProgress');
                 const completedTasks = project.tasks.filter(task => task.status === 'complete');
 
-                this.props.onUserChange(user);
                 this.setState({ 
                     project,
                     toDoTasks,
                     inProgressTasks,
                     completedTasks
                  });
+                this.props.onUserChange(user);
+                 console.log('new state')
             })
             .catch(err => console.log({ err }));
     }
@@ -80,6 +81,8 @@ export default class ProjectDetails extends Component {
     }
 
     updateProject = () => {
+
+        console.log('update project')
         this.componentDidMount();
     }
 
@@ -121,6 +124,7 @@ export default class ProjectDetails extends Component {
                                                 currentProject={this.state.project} 
                                                 updateUserTeams={this.updateUserTeams} 
                                                 updateProject={this.updateProject}
+                                                currentlyAssigned={task.assigned._id}
                                                 task={task}/>
                                             <div className='delete-btn'>
                                                 <FontAwesomeIcon icon={faTimesCircle} onClick={this.deleteTask} />
@@ -145,6 +149,7 @@ export default class ProjectDetails extends Component {
                                                 currentProject={this.state.project} 
                                                 updateUserTeams={this.updateUserTeams} 
                                                 updateProject={this.updateProject}
+                                                currentlyAssigned={task.assigned._id}
                                                 task={task}/>
                                             <div className='delete-btn'>
                                                 <FontAwesomeIcon icon={faTimesCircle} onClick={this.deleteTask} />
@@ -169,6 +174,7 @@ export default class ProjectDetails extends Component {
                                                 currentProject={this.state.project} 
                                                 updateUserTeams={this.updateUserTeams} 
                                                 updateProject={this.updateProject}
+                                                currentlyAssigned={task.assigned._id}
                                                 task={task}/>
                                             <div className='delete-btn'>
                                                 <FontAwesomeIcon icon={faTimesCircle} onClick={this.deleteTask} />

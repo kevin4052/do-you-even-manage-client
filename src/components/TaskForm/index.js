@@ -32,8 +32,7 @@ export default class TaskForm extends Component {
             title, 
             description,
             dueDate,
-            checklist,
-            isComplete
+            checklist
          } = this.state;
 
 
@@ -46,8 +45,7 @@ export default class TaskForm extends Component {
                     project: this.props.currentProject._id, 
                     dueDate: new Date(dueDate), 
                     assigned: assignedID, 
-                    checklist, 
-                    isComplete 
+                    checklist
                 })
             .then(projectFromServer => {
                 const { task } = projectFromServer.data;

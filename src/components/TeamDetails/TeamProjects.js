@@ -53,7 +53,7 @@ export default class TeamProjects extends Component {
         PROJECT_SERVICE
         .createProject({ name, description, team: teamId })
         .then(projectFromServer => {
-            console.log({ projectFromServer });
+            // console.log({ projectFromServer });
 
             TEAM_SERVICE
             .getUserTeams()

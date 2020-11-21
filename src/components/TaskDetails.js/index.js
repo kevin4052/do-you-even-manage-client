@@ -24,21 +24,27 @@ export default class TaskDetails extends Component {
             description, 
             dueDate,
             assigned,
-            checklist,
-            isComplete
+            checklist
         } = this.props.task;
 
+        console.log({assigned})
+
         const date = new Date(dueDate);
-        const convertedDate = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
+        const convertedDate = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + (date.getDate() + 1);
 
         this.setState({
             title, 
             description, 
             dueDate: convertedDate,
             assigned,
-            checklist,
-            isComplete
+            checklist
         });        
+    }
+
+    componentDidUpdate = () => {
+        if (this.state.assigned._id !== this.props.currentlyAssigned) {
+            this.componentDidMount();
+        }
     }
 
     handleInputChange = event => {
@@ -68,7 +74,7 @@ export default class TaskDetails extends Component {
          } = this.state;
 
         //  console.log(modalClasslist)
-         console.log(assignedID)
+        console.log({assignedID})
 
         TASK_SERVICE
         .updateTask(
@@ -85,14 +91,6 @@ export default class TaskDetails extends Component {
             // console.log({ task });
             modalClasslist.remove('display');
             this.props.updateProject();
-
-            // TEAM_SERVICE
-            // .getUserTeams()
-            // .then(responseFromServer => {
-            //     const { teams } = responseFromServer.data;
-            //     this.props.updateUserTeams(teams)
-            // })
-            // .catch(err => console.log({ err }));
         })
         .catch(err => console.log({ err }));
     }
