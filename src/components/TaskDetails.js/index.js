@@ -30,7 +30,12 @@ export default class TaskDetails extends Component {
         console.log({assigned})
 
         const date = new Date(dueDate);
-        const convertedDate = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + (date.getDate() + 1);
+        const month = (date.getMonth() + 1) < 10 ? "0" + (date.getMonth() + 1) : (date.getMonth() + 1);
+        const day = (date.getDate() + 1) < 10 ? "0" + (date.getDate() + 1) : (date.getDate() + 1);
+
+        
+        const convertedDate = date.getFullYear() + "-" + month + "-" + day;
+        console.log({month, day, convertedDate})
 
         this.setState({
             title, 
@@ -87,7 +92,7 @@ export default class TaskDetails extends Component {
                 status: selectedStatus
             })
         .then(responseFromServer => {
-            const { task } = responseFromServer.data;
+            // const { task } = responseFromServer.data;
             // console.log({ task });
             modalClasslist.remove('display');
             this.props.updateProject();
@@ -118,6 +123,13 @@ export default class TaskDetails extends Component {
         input.value = '';
     }
 
+    currentStatus = (status, option) => {
+        if (status === option) {
+            return 'selected'
+        }
+
+    }
+
     render() {
         return (
             <div className='modal'>
@@ -140,7 +152,7 @@ export default class TaskDetails extends Component {
                     <div>
                         <label htmlFor="assigned">Assigned</label>
                         <select name="assigned" id="assigned">
-                            <option value={null}></option>
+                            <option value={null} ></option>
                             {
                                 this.props.currentProject?.team.members?.map(member => 
                                 <option key={`task${member._id}`} value={member._id} >{member.firstName} {member.lastName}</option>)
@@ -171,16 +183,15 @@ export default class TaskDetails extends Component {
                     </div>
                     <div>
                         <label htmlFor="status">Task status: </label>
-                        <select name="status" id="status">
-                            <option value='todo'>not started</option>
-                            <option value='inProgress'>In progress</option>
-                            <option value='complete'>completed</option>
+                        <select name="status" id="status" value={this.state.status}>
+                            <option value='todo' >not started</option>
+                            <option value='inProgress' >In progress</option>
+                            <option value='complete' >completed</option>
                         </select>
                     </div>
                     <input 
                         name='dueDate' 
                         type='date'
-                        placeholder='dueDate'
                         value={this.state.dueDate}
                         onChange={this.handleInputChange}/>
                     <button onClick={this.cancelForm}> Cancel </button>
