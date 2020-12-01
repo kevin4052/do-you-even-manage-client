@@ -71,6 +71,12 @@ export default class ProjectDetails extends Component {
     }
 
     convertDate = (date) => {
+        // const date = new Date(dueDate);
+        // const month = (date.getMonth() + 1) < 10 ? "0" + (date.getMonth() + 1) : (date.getMonth() + 1);
+        // const day = (date.getDate() + 1) < 10 ? "0" + (date.getDate() + 1) : (date.getDate() + 1);
+
+        
+        // const convertedDate = date.getFullYear() + "-" + month + "-" + day;
         const options = { year: 'numeric', month: 'long', day: 'numeric' };
         return new Date(date).toLocaleDateString([],options);
     }
@@ -119,7 +125,10 @@ export default class ProjectDetails extends Component {
                                         this.state.toDoTasks?.map(task => 
                                         <div className='task-card' key={`todo${task._id}`} task={task._id}>
                                             <button onClick={this.displayTask}></button>
-                                            <p>{task.title}</p>
+                                            <div>
+                                                <h4>{task.title}</h4>
+                                                <p>{this.convertDate(task.dueDate)}</p>
+                                            </div>
                                             <TaskDetails 
                                                 currentProject={this.state.project} 
                                                 updateUserTeams={this.updateUserTeams} 
@@ -144,7 +153,10 @@ export default class ProjectDetails extends Component {
                                         this.state.inProgressTasks?.map(task => 
                                         <div className='task-card' key={`progess${task._id}`} task={task._id}>
                                             <button onClick={this.displayTask}></button>
-                                            <p>{task.title}</p>
+                                            <div>
+                                                <h4>{task.title}</h4>
+                                                <p>{this.convertDate(task.dueDate)}</p>
+                                            </div>
                                             <TaskDetails 
                                                 currentProject={this.state.project} 
                                                 updateUserTeams={this.updateUserTeams} 
@@ -169,7 +181,10 @@ export default class ProjectDetails extends Component {
                                         this.state.completedTasks?.map(task => 
                                         <div className='task-card' key={`complete${task._id}`}>
                                             <button onClick={this.displayTask}></button>
-                                            <p>{task.title}</p>
+                                            <div>
+                                                <h4>{task.title}</h4>
+                                                <p>{this.convertDate(task.dueDate)}</p>
+                                            </div>
                                             <TaskDetails 
                                                 currentProject={this.state.project} 
                                                 updateUserTeams={this.updateUserTeams} 
