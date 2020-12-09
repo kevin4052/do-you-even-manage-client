@@ -391,7 +391,7 @@ button:focus {
   width: 100%;
   padding: 1rem;
   background-color: #f4f3ef;
-
+  overflow: scroll;
 }
 
 .flex-row {
@@ -431,7 +431,8 @@ button:focus {
 .team-projects {
   display: flex;
   flex-direction: column;
-  width: 780px;
+  // width: 780px;
+  width: 80%;
   margin: 1rem;
   background-color: white;
   border-radius: 12px;
@@ -547,7 +548,8 @@ td {
   display: flex;
   flex-direction: column;
   border-radius: 5px;
-  width: 330px;
+  // width: 330px;
+  width: auto;
   margin: 1rem;
   align-items: center;
   padding: 0.5rem 1rem;
@@ -743,3 +745,8 @@ td {
     color: #0b9aff;
 }
 
+@media only screen and (max-width: 600px) {
+  .sidenav {
+    width: 100px;
+  }
+}
