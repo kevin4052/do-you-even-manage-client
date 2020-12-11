@@ -745,6 +745,18 @@ td {
     color: #0b9aff;
 }
 
+.good {
+  background-color: rgba(0, 128, 0, 0.4);
+}
+
+.due {
+  background-color: rgba(128, 126, 0, 0.4);
+}
+
+.late {
+  background-color: rgba(128, 0, 0, 0.4);
+}
+
 @media only screen and (max-width: 600px) {
   .sidenav {
     width: 100px;

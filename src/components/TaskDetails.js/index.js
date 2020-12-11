@@ -35,7 +35,11 @@ export default class TaskDetails extends Component {
 
         
         const convertedDate = date.getFullYear() + "-" + month + "-" + day;
-        console.log({month, day, convertedDate})
+        console.log({month, day, convertedDate});
+        const today = new Date();
+
+        const delta = Math.floor((date - today) / (1000 * 3600 * 24));
+        console.log(delta)
 
         this.setState({
             title, 
@@ -183,7 +187,7 @@ export default class TaskDetails extends Component {
                     </div>
                     <div>
                         <label htmlFor="status">Task status: </label>
-                        <select name="status" id="status" value={this.state.status}>
+                        <select name="status" id="status" defaultValue={this.state.status}>
                             <option value='todo' >not started</option>
                             <option value='inProgress' >In progress</option>
                             <option value='complete' >completed</option>

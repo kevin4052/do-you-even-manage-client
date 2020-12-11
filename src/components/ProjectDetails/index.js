@@ -104,6 +104,19 @@ export default class ProjectDetails extends Component {
         .catch(err => console.log({ err }));
     }
 
+    taskStatusColor = (dueDate) => {
+        console.log(dueDate)
+        const statusClass = ['good', 'due', 'late'];
+        const today = new Date();
+        const delta = Math.floor((dueDate - today) / (1000 * 3600 * 24));
+
+        return delta <= 0 
+        ? statusClass[2]
+        : delta <= 7
+        ? statusClass[1]
+        : statusClass[0]
+    }
+
     render() {
         // console.log(this.state?.project);
         return (
@@ -124,7 +137,7 @@ export default class ProjectDetails extends Component {
                                     {
                                         this.state.toDoTasks?.map(task => 
                                         <div className='task-card' key={`todo${task._id}`} task={task._id}>
-                                            <button onClick={this.displayTask}></button>
+                                            <button className={this.taskStatusColor(task.dueDate)} onClick={this.displayTask}></button>
                                             <div>
                                                 <h4>{task.title}</h4>
                                                 <p>{this.convertDate(task.dueDate)}</p>
@@ -152,7 +165,7 @@ export default class ProjectDetails extends Component {
                                     {
                                         this.state.inProgressTasks?.map(task => 
                                         <div className='task-card' key={`progess${task._id}`} task={task._id}>
-                                            <button onClick={this.displayTask}></button>
+                                            <button className={this.taskStatusColor(task.dueDate)} onClick={this.displayTask}></button>
                                             <div>
                                                 <h4>{task.title}</h4>
                                                 <p>{this.convertDate(task.dueDate)}</p>
@@ -180,7 +193,7 @@ export default class ProjectDetails extends Component {
                                     {
                                         this.state.completedTasks?.map(task => 
                                         <div className='task-card' key={`complete${task._id}`}>
-                                            <button onClick={this.displayTask}></button>
+                                            <button className={this.taskStatusColor(task.dueDate)} onClick={this.displayTask}></button>
                                             <div>
                                                 <h4>{task.title}</h4>
                                                 <p>{this.convertDate(task.dueDate)}</p>
