@@ -27,19 +27,13 @@ export default class TaskDetails extends Component {
             checklist
         } = this.props.task;
 
-        console.log({assigned})
+        // console.log({assigned})
 
         const date = new Date(dueDate);
         const month = (date.getMonth() + 1) < 10 ? "0" + (date.getMonth() + 1) : (date.getMonth() + 1);
         const day = (date.getDate() + 1) < 10 ? "0" + (date.getDate() + 1) : (date.getDate() + 1);
-
         
         const convertedDate = date.getFullYear() + "-" + month + "-" + day;
-        console.log({month, day, convertedDate});
-        const today = new Date();
-
-        const delta = Math.floor((date - today) / (1000 * 3600 * 24));
-        console.log(delta)
 
         this.setState({
             title, 

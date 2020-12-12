@@ -41,16 +41,12 @@ export default class ProjectDetails extends Component {
                     completedTasks
                  });
                 this.props.onUserChange(user);
-                 console.log('new state')
+                //  console.log('new state');
             })
             .catch(err => console.log({ err }));
     }
 
     addNewTask = (task) => {
-        // console.log('new task')
-        // const { project } = this.state;
-        // project.tasks.push(task);
-        // this.setState({ project });
         this.componentDidMount();
     }
 
@@ -71,12 +67,6 @@ export default class ProjectDetails extends Component {
     }
 
     convertDate = (date) => {
-        // const date = new Date(dueDate);
-        // const month = (date.getMonth() + 1) < 10 ? "0" + (date.getMonth() + 1) : (date.getMonth() + 1);
-        // const day = (date.getDate() + 1) < 10 ? "0" + (date.getDate() + 1) : (date.getDate() + 1);
-
-        
-        // const convertedDate = date.getFullYear() + "-" + month + "-" + day;
         const options = { year: 'numeric', month: 'long', day: 'numeric' };
         return new Date(date).toLocaleDateString([],options);
     }
@@ -105,10 +95,13 @@ export default class ProjectDetails extends Component {
     }
 
     taskStatusColor = (dueDate) => {
-        console.log(dueDate)
-        const statusClass = ['good', 'due', 'late'];
+        // console.log(dueDate)
         const today = new Date();
-        const delta = Math.floor((dueDate - today) / (1000 * 3600 * 24));
+        const taskDate = new Date(dueDate);
+        const statusClass = ['good', 'due', 'late'];
+        const delta = Math.floor((taskDate - today) / (1000 * 3600 * 24));
+
+        // console.log('delta', delta)
 
         return delta <= 0 
         ? statusClass[2]
